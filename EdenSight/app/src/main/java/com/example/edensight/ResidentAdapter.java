@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ResidentViewHolder> {
@@ -48,7 +49,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
 
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
-        Resident resident = residentList.get(position);
+        final Resident resident = residentList.get(position);
         holder.picture.setImageResource(R.drawable.placeholder);
         holder.name.setText(resident.getName());
         holder.age.setText(resident.getAge());
@@ -56,7 +57,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterCallBack.onMethodCallBack(position);
+                adapterCallBack.onMethodCallBack(resident);
             }
         });
     }
@@ -67,6 +68,11 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     }
 
     public interface AdapterCallBack{
-        void onMethodCallBack(int position);
+        void onMethodCallBack(Resident resident);
+    }
+
+    public void filterList(ArrayList<Resident> filteredList){
+        residentList = filteredList;
+        notifyDataSetChanged();
     }
 }
