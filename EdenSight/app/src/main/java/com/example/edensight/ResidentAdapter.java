@@ -10,12 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ResidentViewHolder> {
     private List<Resident> residentList;
     private AdapterCallBack adapterCallBack;
+    private Context context;
 
     public class ResidentViewHolder extends RecyclerView.ViewHolder{
         public ImageView picture;
@@ -31,6 +34,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
 
     public ResidentAdapter (List<Resident> residentList, Context context){
         this.residentList = residentList;
+        this.context = context;
         try {
             this.adapterCallBack = ((AdapterCallBack) context);
         } catch (ClassCastException e){
@@ -50,9 +54,11 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
         final Resident resident = residentList.get(position);
-        holder.picture.setImageResource(R.drawable.placeholder);
         holder.name.setText(resident.getName());
         holder.age.setText(resident.getAge());
+
+        // Loading Image from URL via Custom Picasso Class
+        PicassoClient.downloadImage(context, resident.getImageURL(), holder.picture);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
