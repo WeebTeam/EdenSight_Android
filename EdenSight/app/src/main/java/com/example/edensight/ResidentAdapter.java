@@ -22,13 +22,15 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
 
     public class ResidentViewHolder extends RecyclerView.ViewHolder{
         public ImageView picture;
-        public TextView name, age;
+        public TextView name, age, allocatedDate, roomNumber;
 
         public ResidentViewHolder(@NonNull View itemView) {
             super(itemView);
             picture = itemView.findViewById(R.id.resident_picture);
             name = itemView.findViewById(R.id.resident_name);
             age = itemView.findViewById(R.id.resident_age);
+            allocatedDate = itemView.findViewById(R.id.resident_allocateDate);
+            roomNumber = itemView.findViewById(R.id.resident_roomNumber);
         }
     }
 
@@ -54,8 +56,10 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
         final Resident resident = residentList.get(position);
-        holder.name.setText(resident.getName());
-        holder.age.setText(resident.getAge());
+        holder.name.setText("Name: " + resident.getName());
+        holder.age.setText("Age: " + resident.getAge());
+        holder.allocatedDate.setText("Date Allocated: " + resident.getAllocationDate());
+        holder.roomNumber.setText("Room Number: " + resident.getRoomNumber());
 
         // Loading Image from URL via Custom Picasso Class
         PicassoClient.downloadImage(context, resident.getImageURL(), holder.picture);

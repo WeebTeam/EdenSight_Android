@@ -77,9 +77,10 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
 
     @Override
     public void onMethodCallBack(Resident resident) {
-        String text = "Name: " + resident.getName() + " Age: " + resident.getAge();
-        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-        toast.show();
+        Intent intent = new Intent(this, ResidentDetailsActivity.class);
+        intent.putExtra("resident", resident);
+        // finish() not used as this user might still want to return to this activity
+        startActivity(intent);
     }
 
     @Override
