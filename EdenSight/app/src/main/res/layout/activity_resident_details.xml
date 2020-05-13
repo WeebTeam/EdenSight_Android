@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,53 +9,64 @@
     <ImageView
         android:id="@+id/resident_detail_picture"
         android:layout_width="150dp"
-        android:layout_height="150dp
-"
+        android:layout_height="150dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/placeholder"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/resident_detail_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/resident_detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name:"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/resident_detail_picture"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_age"
-        android:layout_margin="10dp"/>
+        android:layout_toRightOf="@id/resident_detail_picture"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <TextView
         android:id="@+id/resident_detail_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Age:"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_name"
-        app:layout_constraintLeft_toRightOf="@id/resident_detail_picture"
-        android:layout_margin="10dp"/>
+        android:layout_toRightOf="@id/resident_detail_picture"
+        android:layout_below="@id/resident_detail_name"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:id="@+id/resident_detail_allocateDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Allocate Date"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_age"
-        app:layout_constraintLeft_toRightOf="@id/resident_detail_picture"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_roomNumber"
-        android:layout_margin="10dp"/>
+        android:layout_toRightOf="@id/resident_detail_picture"
+        android:layout_below="@id/resident_detail_age"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"/>
 
     <TextView
         android:id="@+id/resident_detail_roomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Room Number"
-        app:layout_constraintLeft_toRightOf="@id/resident_detail_picture"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_allocateDate"
-        android:layout_margin="10dp"/>
+        android:layout_toRightOf="@id/resident_detail_picture"
+        android:layout_below="@id/resident_detail_allocateDate"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/resident_detail_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/resident_detail_picture"
+        android:layout_marginTop="5dp"/>
+
+</RelativeLayout>
