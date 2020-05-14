@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResidentDetailsActivity">
+    tools:context=".ResidentDetailsActivity"
+    android:background="@color/greenBackground">
 
     <ImageView
         android:id="@+id/resident_detail_picture"
