@@ -11,13 +11,13 @@ public class PicassoClient {
         if (url != null && !url.isEmpty()){
             Picasso.with(c)
                     .load(url)
-                    .placeholder(R.drawable.placeholder)
+                    .placeholder(R.drawable.person_placeholder)
                     .error(R.drawable.error)
                     .fit()
                     .noFade()
                     .into(img);
         } else {
-            img.setImageResource(R.drawable.placeholder);
+            img.setImageResource(R.drawable.error);
         }
     }
 }
