@@ -20,21 +20,21 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     private AdapterCallBack adapterCallBack;
     private Context context;
 
-    public class ResidentViewHolder extends RecyclerView.ViewHolder{
-        public ImageView picture;
-        public TextView name, age, allocatedDate, roomNumber;
+    static class ResidentViewHolder extends RecyclerView.ViewHolder{
+        ImageView picture;
+        TextView name, roomNumber, status, caretaker;
 
-        public ResidentViewHolder(@NonNull View itemView) {
+        ResidentViewHolder(@NonNull View itemView) {
             super(itemView);
             picture = itemView.findViewById(R.id.resident_picture);
             name = itemView.findViewById(R.id.resident_name);
-            age = itemView.findViewById(R.id.resident_age);
-            allocatedDate = itemView.findViewById(R.id.resident_allocateDate);
             roomNumber = itemView.findViewById(R.id.resident_roomNumber);
+            status = itemView.findViewById(R.id.resident_status);
+            caretaker = itemView.findViewById(R.id.resident_caretaker);
         }
     }
 
-    public ResidentAdapter (List<Resident> residentList, Context context){
+    ResidentAdapter(List<Resident> residentList, Context context){
         this.residentList = residentList;
         this.context = context;
         try {
@@ -56,10 +56,15 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
         final Resident resident = residentList.get(position);
-        holder.name.setText("Name: " + resident.getName());
-        holder.age.setText("Age: " + resident.getAge());
-        holder.allocatedDate.setText("Date Allocated: " + resident.getAllocationDate());
-        holder.roomNumber.setText("Room Number: " + resident.getRoomNumber());
+        String name = context.getString(R.string.name) + " " +  resident.getName();
+        String roomNum = context.getString(R.string.room_number) + " " + resident.getRoomNumber();
+        String status = context.getString(R.string.status) + " " + resident.getStatus();
+        String caretaker = context.getString(R.string.caretaker) + " " + resident.getCaretaker();
+
+        holder.name.setText(name);
+        holder.roomNumber.setText(roomNum);
+        holder.status.setText(status);
+        holder.caretaker.setText(caretaker);
 
         // Loading Image from URL via Custom Picasso Class
         PicassoClient.downloadImage(context, resident.getImageURL(), holder.picture);
@@ -81,7 +86,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
         void onMethodCallBack(Resident resident);
     }
 
-    public void filterList(ArrayList<Resident> filteredList){
+    void filterList(ArrayList<Resident> filteredList){
         residentList = filteredList;
         notifyDataSetChanged();
     }

@@ -13,7 +13,7 @@
         android:id="@+id/resident_picture"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,43 +23,44 @@
         android:id="@+id/resident_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/resident_picture"
-        app:layout_constraintBottom_toTopOf="@id/resident_age"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
-        android:id="@+id/resident_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Age"
-        app:layout_constraintLeft_toRightOf="@id/resident_picture"
-        app:layout_constraintTop_toBottomOf="@id/resident_name"
-        app:layout_constraintBottom_toTopOf="@id/resident_allocateDate"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
-        android:id="@+id/resident_allocateDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Allocation Date"
-        app:layout_constraintLeft_toRightOf="@id/resident_picture"
-        app:layout_constraintTop_toBottomOf="@id/resident_age"
         app:layout_constraintBottom_toTopOf="@id/resident_roomNumber"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginStart="10dp"/>
 
     <TextView
         android:id="@+id/resident_roomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Room Number"
+        android:text="@string/room_number"
         app:layout_constraintLeft_toRightOf="@id/resident_picture"
-        app:layout_constraintTop_toBottomOf="@id/resident_allocateDate"
+        app:layout_constraintBottom_toTopOf="@id/resident_status"
+        app:layout_constraintTop_toBottomOf="@id/resident_name"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/resident_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        app:layout_constraintLeft_toRightOf="@id/resident_picture"
+        app:layout_constraintBottom_toTopOf="@id/resident_caretaker"
+        app:layout_constraintTop_toBottomOf="@id/resident_roomNumber"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/resident_caretaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/caretaker"
+        app:layout_constraintLeft_toRightOf="@id/resident_picture"
+        app:layout_constraintTop_toBottomOf="@id/resident_status"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

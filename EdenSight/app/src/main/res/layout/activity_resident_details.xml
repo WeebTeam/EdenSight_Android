@@ -11,11 +11,11 @@
         android:id="@+id/resident_detail_picture"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
@@ -26,50 +26,73 @@
         android:id="@+id/resident_detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name:"
-        android:layout_toRightOf="@id/resident_detail_picture"
+        android:text="@string/name"
+        android:layout_toEndOf="@id/resident_detail_picture"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"/>
 
     <TextView
         android:id="@+id/resident_detail_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Age:"
-        android:layout_toRightOf="@id/resident_detail_picture"
+        android:text="@string/age"
+        android:layout_toEndOf="@id/resident_detail_picture"
         android:layout_below="@id/resident_detail_name"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp" />
 
     <TextView
         android:id="@+id/resident_detail_allocateDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Allocate Date"
-        android:layout_toRightOf="@id/resident_detail_picture"
+        android:text="@string/alloc_date"
+        android:layout_toEndOf="@id/resident_detail_picture"
         android:layout_below="@id/resident_detail_age"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"/>
 
     <TextView
         android:id="@+id/resident_detail_roomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Room Number"
-        android:layout_toRightOf="@id/resident_detail_picture"
+        android:text="@string/room_number"
+        android:layout_toEndOf="@id/resident_detail_picture"
         android:layout_below="@id/resident_detail_allocateDate"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/resident_detail_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        android:layout_toEndOf="@id/resident_detail_picture"
+        android:layout_below="@id/resident_detail_roomNumber"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/resident_detail_caretaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/caretaker"
+        android:layout_toEndOf="@id/resident_detail_picture"
+        android:layout_below="@id/resident_detail_status"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/resident_detail_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/resident_detail_picture"
+        android:layout_below="@id/resident_detail_caretaker"
         android:layout_marginTop="5dp">
 
         <com.google.android.material.tabs.TabLayout

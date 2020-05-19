@@ -19,7 +19,7 @@ public class ResidentDetailsActivity extends FragmentActivity {
 
     Resident selectedResident;
     ImageView residentImage;
-    TextView residentName, residentAge, residentAllocateDate, residentRoomNumber;
+    TextView residentName, residentAge, residentAllocateDate, residentRoomNumber, residentStatus, residentCaretaker;
     ViewPager pager;
 
     @Override
@@ -36,13 +36,24 @@ public class ResidentDetailsActivity extends FragmentActivity {
         residentAge = findViewById(R.id.resident_detail_age);
         residentAllocateDate = findViewById(R.id.resident_detail_allocateDate);
         residentRoomNumber = findViewById(R.id.resident_detail_roomNumber);
+        residentStatus = findViewById(R.id.resident_detail_status);
+        residentCaretaker = findViewById(R.id.resident_detail_caretaker);
         pager = findViewById(R.id.resident_detail_viewpager);
 
         PicassoClient.downloadImage(this, selectedResident.getImageURL(), residentImage);
-        residentName.setText("Name: " + selectedResident.getName());
-        residentAge.setText("Age: " + selectedResident.getAge());
-        residentAllocateDate.setText("Date Allocated: " + selectedResident.getAllocationDate());
-        residentRoomNumber.setText("Room Number: " + selectedResident.getRoomNumber());
+        String name = getString(R.string.name) + " " + selectedResident.getName();
+        String age = getString(R.string.age) + " " + selectedResident.getAge();
+        String allocDate = getString(R.string.alloc_date) + " " + selectedResident.getAllocationDate();
+        String roomNum = getString(R.string.room_number) + " " + selectedResident.getRoomNumber();
+        String status = getString(R.string.status) + " " + selectedResident.getStatus();
+        String caretaker = getString(R.string.caretaker) + " " + selectedResident.getCaretaker();
+
+        residentName.setText(name);
+        residentAge.setText(age);
+        residentAllocateDate.setText(allocDate);
+        residentRoomNumber.setText(roomNum);
+        residentStatus.setText(status);
+        residentCaretaker.setText(caretaker);
 
         pager.setAdapter(new DetailsPagerAdapter(getSupportFragmentManager()));
         pager.setPageTransformer(true, new ZoomOutPageTransformer());
@@ -60,7 +71,7 @@ public class ResidentDetailsActivity extends FragmentActivity {
 
    public class DetailsPagerAdapter extends FragmentStatePagerAdapter{
 
-       public DetailsPagerAdapter(@NonNull FragmentManager fm) {
+       DetailsPagerAdapter(@NonNull FragmentManager fm) {
            super(fm);
        }
 
