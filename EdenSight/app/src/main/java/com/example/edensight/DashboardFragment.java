@@ -3,6 +3,7 @@ package com.example.edensight;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class DashboardFragment extends Fragment {
     private static final String RESIDENT_PARAMETER = "resident";
-
     private Resident resident;
 
     public DashboardFragment() {
@@ -39,18 +43,25 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard,container,false);
-        TextView testText = (TextView)view.findViewById(R.id.test_dashboardText);
-        Button testButton = (Button)view.findViewById(R.id.test_dashboardButton);
+        TextView timeDisplay = view.findViewById(R.id.test_dashboardText);
+        Button refreshBtn = view.findViewById(R.id.test_dashboardButton);
 
-        String text = "Name: " + resident.getName();
-        testText.setText(text);
-        testButton.setOnClickListener(new View.OnClickListener() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        String currentTime = "Last Updated: " + dateFormat.format(calendar.getTime());
+        timeDisplay.setText(currentTime);
+
+        // Lets user refresh fragment to retrieve latest data and time
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), resident.getName(), Toast.LENGTH_SHORT).show();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(DashboardFragment.this).attach(DashboardFragment.this).commit();
+                Toast.makeText(getActivity(), "Update Complete", Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
     }
+
 }

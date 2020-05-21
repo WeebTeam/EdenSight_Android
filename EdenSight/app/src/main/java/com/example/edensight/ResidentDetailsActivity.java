@@ -2,12 +2,12 @@ package com.example.edensight;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -15,12 +15,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 public class ResidentDetailsActivity extends FragmentActivity {
 
     Resident selectedResident;
     ImageView residentImage;
     TextView residentName, residentAge, residentAllocateDate, residentRoomNumber, residentStatus, residentCaretaker;
     ViewPager pager;
+    DashboardFragment dashboardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,17 @@ public class ResidentDetailsActivity extends FragmentActivity {
                    return HistoryFragment.newInstance(selectedResident);
            }
            return null;
+       }
+
+       @Override
+       public int getItemPosition(@NonNull Object object) {
+           int position = 0;
+           if (object instanceof DashboardFragment){
+               position = 0;
+           } else if (object instanceof HistoryFragment){
+               position = 1;
+           }
+           return (position >= 0) ? position : POSITION_NONE;
        }
 
        @Override

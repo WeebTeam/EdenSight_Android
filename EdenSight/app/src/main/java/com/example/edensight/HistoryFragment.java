@@ -3,6 +3,7 @@ package com.example.edensight;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class HistoryFragment extends Fragment {
     private static final String RESIDENT_PARAMETER = "resident";
@@ -41,15 +46,20 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
-        TextView testText = (TextView)view.findViewById(R.id.test_historyText);
-        Button testButton = (Button)view.findViewById(R.id.test_historyButton);
+        TextView timeDisplay = view.findViewById(R.id.test_historyText);
+        Button refreshBtn = view.findViewById(R.id.test_historyButton);
 
-        String text = "Age: " + resident.getAge();
-        testText.setText(text);
-        testButton.setOnClickListener(new View.OnClickListener() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        String currentTime = "Last Updated: " + dateFormat.format(calendar.getTime());
+        timeDisplay.setText(currentTime);
+
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), resident.getAge(), Toast.LENGTH_SHORT).show();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(HistoryFragment.this).attach(HistoryFragment.this).commit();
+                Toast.makeText(getActivity(), "Update Complete", Toast.LENGTH_SHORT).show();
             }
         });
 
