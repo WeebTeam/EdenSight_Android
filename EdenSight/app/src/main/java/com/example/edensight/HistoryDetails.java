@@ -35,11 +35,11 @@ public class HistoryDetails {
 
     public static ArrayList<HistoryDetails> dummyDetailsList(){
         ArrayList<HistoryDetails> detailsArrayList = new ArrayList<HistoryDetails>();
-        detailsArrayList.add(new HistoryDetails("25/04/2019", "25 \u2109", "105 bpm", "115/75 mmHg", "80 mg/dL"));
-        detailsArrayList.add(new HistoryDetails("26/04/2019", "26 \u2109", "107 bpm", "117/78 mmHg", "82 mg/dL"));
-        detailsArrayList.add(new HistoryDetails("27/04/2019", "25 \u2109", "104 bpm", "119/76 mmHg", "81 mg/dL"));
-        detailsArrayList.add(new HistoryDetails("28/04/2019", "24 \u2109", "103 bpm", "120/80 mmHg", "78 mg/dL"));
-        detailsArrayList.add(new HistoryDetails("29/04/2019", "27 \u2109", "108 bpm", "119/77 mmHg", "79 mg/dL"));
+        detailsArrayList.add(new HistoryDetails("25/04/2019", "25 \u2103", "105 bpm", "115/75 mmHg", "80 mg/dL"));
+        detailsArrayList.add(new HistoryDetails("26/04/2019", "26 \u2103", "107 bpm", "117/78 mmHg", "82 mg/dL"));
+        detailsArrayList.add(new HistoryDetails("27/04/2019", "25 \u2103", "104 bpm", "119/76 mmHg", "81 mg/dL"));
+        detailsArrayList.add(new HistoryDetails("28/04/2019", "24 \u2103", "103 bpm", "120/80 mmHg", "78 mg/dL"));
+        detailsArrayList.add(new HistoryDetails("29/04/2019", "27 \u2103", "108 bpm", "119/77 mmHg", "79 mg/dL"));
 
         return detailsArrayList;
     }

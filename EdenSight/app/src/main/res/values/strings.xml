@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">EdenSight</string>
+
+    // Used in Resident View Holder
     <string name="name">Name: </string>
     <string name="age">Age: </string>
     <string name="alloc_date">Date Allocated: </string>
     <string name="room_number">Room Number: </string>
     <string name="status">Status: </string>
     <string name="caretaker">Caretaker: </string>
+
+    // Used in Details View Holder
+    <string name="date">Date: </string>
+    <string name="avg_temp">Avg. BT: </string>
+    <string name="avg_ecg">Avg. ECG: </string>
+    <string name="avg_bp">Avg. BP: </string>
+    <string name="avg_blood_sugar">Avg. BG: </string>
 </resources>

@@ -36,19 +36,30 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.DetailsV
     @NonNull
     @Override
     public DetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.history_view, parent, false);
 
-        return null;
+        return new DetailsViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DetailsViewHolder holder, int position) {
+        final HistoryDetails details = historyDetails.get(position);
+        String date = context.getString(R.string.date) + " " + details.getDate();
+        String temp = context.getString(R.string.avg_temp) + " " + details.getAvgTemp();
+        String ecg = context.getString(R.string.avg_ecg) + " " + details.getAvgEcg();
+        String bp = context.getString(R.string.avg_bp) + " " + details.getAvgBp();
+        String bloodSugar = context.getString(R.string.avg_blood_sugar) + " " + details.getAvgBloodSugar();
 
+        holder.date.setText(date);
+        holder.avgTemp.setText(temp);
+        holder.avgEcg.setText(ecg);
+        holder.avgBp.setText(bp);
+        holder.avgBloodSugar.setText(bloodSugar);
     }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public int getItemCount() { return historyDetails.size(); }
 
 
 }
