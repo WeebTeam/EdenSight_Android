@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,9 +49,10 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         TextView timeDisplay = view.findViewById(R.id.test_historyText);
         Button refreshBtn = view.findViewById(R.id.test_historyButton);
+        RecyclerView recyclerView = view.findViewById(R.id.history_recyclerView);
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
         String currentTime = "Last Updated: " + dateFormat.format(calendar.getTime());
         timeDisplay.setText(currentTime);
 

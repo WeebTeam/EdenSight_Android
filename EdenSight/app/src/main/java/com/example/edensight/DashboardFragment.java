@@ -47,7 +47,7 @@ public class DashboardFragment extends Fragment {
         Button refreshBtn = view.findViewById(R.id.test_dashboardButton);
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
         String currentTime = "Last Updated: " + dateFormat.format(calendar.getTime());
         timeDisplay.setText(currentTime);
 

@@ -82,7 +82,7 @@ public class Resident implements Parcelable {
 
     public void setCaretaker(String caretaker) { this.caretaker = caretaker; }
 
-    public static ArrayList<Resident> dummyResidentList(){;
+    public static ArrayList<Resident> dummyResidentList(){
         ArrayList<Resident> residentArrayList = new ArrayList<Resident>();
         residentArrayList.add(new Resident("Plucky", "10", "https://stockfresh.com/zooms/stockfresh_id894367_255ee1.jpg", "12/4/2010", "A304", "Healthy", "Bob"));
         residentArrayList.add(new Resident("Timmy", "5", "https://stockfresh.com/zooms/stockfresh_id894367_255ee1.jpg", "3/12/2015", "B202", "Healthy", "Ryan"));
