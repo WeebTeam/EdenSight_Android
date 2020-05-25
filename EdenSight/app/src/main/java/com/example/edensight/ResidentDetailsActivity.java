@@ -22,7 +22,6 @@ public class ResidentDetailsActivity extends FragmentActivity {
     ImageView residentImage;
     TextView residentName, residentAge, residentAllocateDate, residentRoomNumber, residentStatus, residentCaretaker;
     ViewPager pager;
-    DashboardFragment dashboardFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,9 @@ public class ResidentDetailsActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (pager.getCurrentItem() == 0){
-            super.onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             pager.setCurrentItem(pager.getCurrentItem() - 1);
         }
@@ -87,17 +88,6 @@ public class ResidentDetailsActivity extends FragmentActivity {
                    return HistoryFragment.newInstance(selectedResident);
            }
            return null;
-       }
-
-       @Override
-       public int getItemPosition(@NonNull Object object) {
-           int position = 0;
-           if (object instanceof DashboardFragment){
-               position = 0;
-           } else if (object instanceof HistoryFragment){
-               position = 1;
-           }
-           return (position >= 0) ? position : POSITION_NONE;
        }
 
        @Override

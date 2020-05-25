@@ -15,7 +15,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -75,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
     public void onMethodCallBack(Resident resident) {
         Intent intent = new Intent(this, ResidentDetailsActivity.class);
         intent.putExtra("resident", resident);
-        // finish() not used as this user might still want to return to this activity
         startActivity(intent);
+        finish();
     }
 
     @Override

@@ -52,7 +52,7 @@
                     android:id="@+id/temp_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Temperature" />
+                    android:text="BT: " />
             </LinearLayout>
 
             <LinearLayout
@@ -80,7 +80,7 @@
                     android:id="@+id/ecg_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ECG" />
+                    android:text="ECG: " />
             </LinearLayout>
 
             <LinearLayout
@@ -108,7 +108,7 @@
                     android:id="@+id/bp_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blood Pressure" />
+                    android:text="BP: " />
 
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                     android:id="@+id/blood_sugar_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blood Sugar" />
+                    android:text="BG: " />
 
             </LinearLayout>
 
