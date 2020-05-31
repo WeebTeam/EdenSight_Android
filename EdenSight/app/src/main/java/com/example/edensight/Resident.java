@@ -85,12 +85,12 @@ public class Resident implements Parcelable {
     public static ArrayList<Resident> dummyResidentList(){
         ArrayList<Resident> residentArrayList = new ArrayList<Resident>();
         residentArrayList.add(new Resident("Plucky", "10", "https://stockfresh.com/zooms/stockfresh_id894367_255ee1.jpg", "12/4/2010", "A304", "Healthy", "Bob"));
-        residentArrayList.add(new Resident("Timmy", "5", "https://stockfresh.com/zooms/stockfresh_id894367_255ee1.jpg", "3/12/2015", "B202", "Healthy", "Ryan"));
-        residentArrayList.add(new Resident("Tommy", "5", "https://i.kym-cdn.com/photos/images/original/001/316/888/f81.jpeg", "17/8/2004", "A101", "Healthy", "Bob"));
+        residentArrayList.add(new Resident("Timmy", "5", "https://edit.co.uk/uploads/2016/12/Image-1-Alternatives-to-stock-photography-Thinkstock.jpg", "3/12/2015", "B202", "Healthy", "Ryan"));
+        residentArrayList.add(new Resident("Tommy", "5", "https://image.shutterstock.com/image-photo/boy-praying-god-stock-image-600w-1064089271.jpg", "17/8/2004", "A101", "Healthy", "Bob"));
         residentArrayList.add(new Resident("Rory", "11", "https://i.kym-cdn.com/photos/images/original/001/316/888/f81.jpeg", "5/1/2010", "A303", "Healthy", "Lee"));
         residentArrayList.add(new Resident("Sydney", "9", "https://www.apimages.com/Images/Ap_Creative_Stock_Header.jpg", "24/6/2019", "B504", "Healthy", "Lee"));
-        residentArrayList.add(new Resident("Yuka", "9", "https://www.apimages.com/Images/Ap_Creative_Stock_Header.jpg", "6/2/2009", "B605", "Healthy", "Sharon"));
-        residentArrayList.add(new Resident("Tom Nook", "20", "https://www.apimages.com/Images/Ap_Creative_Stock_Header.jpg", "5/7/2010", "A102", "Healthy", "Megan"));
+        residentArrayList.add(new Resident("Yuka", "9", "https://cdn.theatlantic.com/static/mt/assets/science/cat_caviar.jpg", "6/2/2009", "B605", "Healthy", "Sharon"));
+        residentArrayList.add(new Resident("Tom Nook", "20", "https://img3.stockfresh.com/files/i/ichiosea/m/45/4056303_stock-photo-grandpa-protecting-his-savings.jpg", "5/7/2010", "A102", "Healthy", "Megan"));
 
         return residentArrayList;
     }
