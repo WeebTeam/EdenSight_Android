@@ -48,7 +48,7 @@ public class DashboardFragment extends Fragment {
         Button refreshBtn = view.findViewById(R.id.test_dashboardButton);
 
         TextView tempText = view.findViewById(R.id.temp_text);
-        TextView ecgText = view.findViewById(R.id.ecg_text);
+        TextView heartRateText = view.findViewById(R.id.heartRate_text);
         TextView bpText = view.findViewById(R.id.bp_text);
         TextView bloodsugarText = view.findViewById(R.id.blood_sugar_text);
 
@@ -59,8 +59,8 @@ public class DashboardFragment extends Fragment {
 
         String temperature = "BT: " + randomNumber(38, 36) + " \u2103";
         tempText.setText(temperature);
-        String ecg = "ECG: " + randomNumber(95, 70) + " bpm";
-        ecgText.setText(ecg);
+        String heartRate = "HR: " + randomNumber(95, 70) + " bpm";
+        heartRateText.setText(heartRate);
         String bp = "BP: " + randomNumber(120, 110) + "/" + randomNumber(80,70) + " mmHg";
         bpText.setText(bp);
         String bloodsugar = "BG: " + randomNumber(140, 72) + " mg/dL";

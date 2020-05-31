@@ -16,13 +16,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.DetailsV
     private Context context;
 
     public class DetailsViewHolder extends RecyclerView.ViewHolder {
-        TextView date, avgTemp, avgEcg, avgBp, avgBloodSugar;
+        TextView date, avgTemp, avgHr, avgBp, avgBloodSugar;
 
         public DetailsViewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.history_date);
             avgTemp = itemView.findViewById(R.id.history_temp);
-            avgEcg = itemView.findViewById(R.id.history_ecg);
+            avgHr = itemView.findViewById(R.id.history_hr);
             avgBp = itemView.findViewById(R.id.history_bp);
             avgBloodSugar = itemView.findViewById(R.id.history_blood_sugar);
         }
@@ -47,13 +47,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.DetailsV
         final HistoryDetails details = historyDetails.get(position);
         String date = context.getString(R.string.date) + " " + details.getDate();
         String temp = context.getString(R.string.avg_temp) + " " + details.getAvgTemp();
-        String ecg = context.getString(R.string.avg_ecg) + " " + details.getAvgEcg();
+        String hr = context.getString(R.string.avg_ecg) + " " + details.getAvgHr();
         String bp = context.getString(R.string.avg_bp) + " " + details.getAvgBp();
         String bloodSugar = context.getString(R.string.avg_blood_sugar) + " " + details.getAvgBloodSugar();
 
         holder.date.setText(date);
         holder.avgTemp.setText(temp);
-        holder.avgEcg.setText(ecg);
+        holder.avgHr.setText(hr);
         holder.avgBp.setText(bp);
         holder.avgBloodSugar.setText(bloodSugar);
     }

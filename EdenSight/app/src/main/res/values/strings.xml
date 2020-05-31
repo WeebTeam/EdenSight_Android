@@ -12,7 +12,7 @@
     // Used in Details View Holder
     <string name="date">Date: </string>
     <string name="avg_temp">Avg. BT: </string>
-    <string name="avg_ecg">Avg. ECG: </string>
+    <string name="avg_ecg">Avg. HR: </string>
     <string name="avg_bp">Avg. BP: </string>
     <string name="avg_blood_sugar">Avg. BG: </string>
 </resources>

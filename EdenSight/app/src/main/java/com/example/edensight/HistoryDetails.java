@@ -3,12 +3,12 @@ package com.example.edensight;
 import java.util.ArrayList;
 
 public class HistoryDetails {
-    private String date, avgTemp, avgEcg, avgBp, avgBloodSugar;
+    private String date, avgTemp, avgHr, avgBp, avgBloodSugar;
 
-    public HistoryDetails(String date, String avgTemp, String avgEcg, String avgBp, String avgBloodSugar) {
+    public HistoryDetails(String date, String avgTemp, String avgHr, String avgBp, String avgBloodSugar) {
         this.date = date;
         this.avgTemp = avgTemp;
-        this.avgEcg = avgEcg;
+        this.avgHr = avgHr;
         this.avgBp = avgBp;
         this.avgBloodSugar = avgBloodSugar;
     }
@@ -21,9 +21,9 @@ public class HistoryDetails {
 
     public void setAvgTemp(String avgTemp) { this.avgTemp = avgTemp; }
 
-    public String getAvgEcg() { return avgEcg; }
+    public String getAvgHr() { return avgHr; }
 
-    public void setAvgEcg(String avgEcg) { this.avgEcg = avgEcg; }
+    public void setAvgHr(String avgEcg) { this.avgHr = avgEcg; }
 
     public String getAvgBp() { return avgBp; }
 
