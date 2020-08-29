@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class Login extends AppCompatActivity {
     TextView testTextView;
     EditText usernameInput, passwordInput;
     Button loginBtn;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,27 +38,12 @@ public class Login extends AppCompatActivity {
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginBtn = findViewById(R.id.loginBtn);
+        progressBar = findViewById(R.id.login_progressBar);
 
         // Check if login details are correct (Use staff [staff] for now until database is available)
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                // Login Correct
-                if (usernameInput.getText().toString().equals("staff") && passwordInput.getText().toString().equals("staff")){
-                    Toast toast = Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT);
-                    toast.show();
-                    // Moves to Main Activity
-                    Intent loginIntent = new Intent (getApplicationContext(), MainActivity.class);
-                    startActivity(loginIntent);
-                    finish();
-
-                } else { // Incorrect Login
-                    Toast toast = Toast.makeText(getApplicationContext(),"Please provide the correct login details.", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-
-                 */
                 // Testing HTTP Connection with API
                 new RetrieveLoginTask().execute();
             }
@@ -96,6 +83,7 @@ public class Login extends AppCompatActivity {
         private Exception exception;
 
         protected void onPreExecute(){
+            progressBar.setVisibility(View.VISIBLE);
             testTextView.setText("Not Sent Yet.");
         }
 
@@ -128,9 +116,25 @@ public class Login extends AppCompatActivity {
             if (response == null){
                 response = "THERE WAS AN ERROR";
             }
+            progressBar.setVisibility(View.GONE);
             // Cut to 50 characters
             response = response.substring(0, Math.min(response.length(), 50));
             testTextView.setText(response);
+
+            // This part to validate user input with database (WIP)
+            // Correct Login
+            if (usernameInput.getText().toString().equals("staff") && passwordInput.getText().toString().equals("staff")){
+                Toast toast = Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT);
+                toast.show();
+                // Moves to Main Activity
+                Intent loginIntent = new Intent (getApplicationContext(), MainActivity.class);
+                startActivity(loginIntent);
+                finish();
+
+            } else { // Incorrect Login
+                Toast toast = Toast.makeText(getApplicationContext(),"Please provide the correct login details.", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 }
