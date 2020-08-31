@@ -1,11 +1,14 @@
 package com.example.edensight;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +20,11 @@ import java.util.List;
 
 public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ResidentViewHolder> {
     private List<Resident> residentList;
-    private AdapterCallBack adapterCallBack;
     private Context context;
 
     static class ResidentViewHolder extends RecyclerView.ViewHolder{
         ImageView picture;
+        Button testButton;
         TextView name, roomNumber, status, caretaker;
 
         ResidentViewHolder(@NonNull View itemView) {
@@ -31,17 +34,13 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
             roomNumber = itemView.findViewById(R.id.resident_roomNumber);
             status = itemView.findViewById(R.id.resident_status);
             caretaker = itemView.findViewById(R.id.resident_caretaker);
+            testButton = itemView.findViewById(R.id.test_button);
         }
     }
 
     ResidentAdapter(List<Resident> residentList, Context context){
         this.residentList = residentList;
         this.context = context;
-        try {
-            this.adapterCallBack = ((AdapterCallBack) context);
-        } catch (ClassCastException e){
-            throw new ClassCastException("Activity must implement AdapterCallBack!!");
-        }
     }
 
     @NonNull
@@ -56,7 +55,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
         final Resident resident = residentList.get(position);
-        String name = context.getString(R.string.name) + " " +  resident.getName();
+        final String name = context.getString(R.string.name) + " " +  resident.getName();
         String roomNum = context.getString(R.string.room_number) + " " + resident.getRoomNumber();
         String status = context.getString(R.string.status) + " " + resident.getStatus();
         String caretaker = context.getString(R.string.caretaker) + " " + resident.getCaretaker();
@@ -69,10 +68,12 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
         // Loading Image from URL via Custom Picasso Class
         PicassoClient.downloadImage(context, resident.getImageURL(), holder.picture);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterCallBack.onMethodCallBack(resident);
+                Intent intent = new Intent(context, ResidentDetailsActivity.class);
+                intent.putExtra("resident", resident);
+                context.startActivity(intent);
             }
         });
     }
@@ -80,14 +81,5 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public int getItemCount() {
         return residentList.size();
-    }
-
-    public interface AdapterCallBack{
-        void onMethodCallBack(Resident resident);
-    }
-
-    void filterList(ArrayList<Resident> filteredList){
-        residentList = filteredList;
-        notifyDataSetChanged();
     }
 }

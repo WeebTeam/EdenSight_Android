@@ -7,22 +7,33 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ResidentAdapter.AdapterCallBack {
+import javax.net.ssl.HttpsURLConnection;
+
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<Resident> residents;
-    private ResidentAdapter residentAdapter;
     private EditText searchFilter;
 
     @Override
@@ -30,16 +41,15 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        residents = Resident.dummyResidentList();
         recyclerView = findViewById(R.id.resident_recycler_view);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        residentAdapter = new ResidentAdapter(residents, this);
-        recyclerView.setAdapter(residentAdapter);
+
+        new RetrieveMainActivityTask(this, recyclerView).execute();
 
         searchFilter = findViewById(R.id.search_filter);
+        /*
         searchFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -51,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
             public void afterTextChanged(Editable s) {
                 filter(s.toString());
             }
-        });
+        });*/
     }
 
     @Override
@@ -71,18 +81,11 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
     }
 
     @Override
-    public void onMethodCallBack(Resident resident) {
-        Intent intent = new Intent(this, ResidentDetailsActivity.class);
-        intent.putExtra("resident", resident);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     public void onBackPressed() {
         logout();
     }
 
+    /*
     private void filter(String text){
         ArrayList<Resident> filteredList = new ArrayList<>();
 
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
             }
         }
         residentAdapter.filterList(filteredList);
-    }
+    }*/
 
     public void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -119,5 +122,69 @@ public class MainActivity extends AppCompatActivity implements ResidentAdapter.A
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public class RetrieveMainActivityTask extends AsyncTask<Void, Void, String>{
+        Context c;
+        RecyclerView rv;
+        ArrayList<Resident> residents = new ArrayList<>();
+
+        public RetrieveMainActivityTask(Context c, RecyclerView rv){
+            this.c = c;
+            this.rv = rv;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String urlText = "https://braserver.mooo.com/edensight/residents/all";
+            try {
+                URL url = new URL(urlText);
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("Authorization", "Basic cG9nZ2Vyczp0dXR1cnU=");
+                int responseCode = urlConnection.getResponseCode();
+
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String inline;
+                    while ((inline = bufferedReader.readLine()) != null){
+                        stringBuilder.append(inline).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
+                } finally {
+                    urlConnection.disconnect();
+                }
+
+            } catch (Exception e){
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String response){
+
+            if (response == null){
+                response = "THERE WAS AN ERROR";
+            }
+
+            try{
+                JSONArray jsonResidents = new JSONArray(response);
+                Log.i("INFO", jsonResidents.toString());
+                Log.i("INFO", jsonResidents.get(0).toString());
+                for (int i = 0; i < jsonResidents.length(); i++) {
+                    JSONObject object = jsonResidents.getJSONObject(i);
+                    Resident resident = new Resident(object.get("name").toString(), "0", "https://image.shutterstock.com/image-photo/boy-praying-god-hands-held-600w-1064089271.jpg", "sampleDate", object.get("room").toString(), object.get("status").toString(), object.get("caretaker").toString());
+                    Log.i("INFO", "Name: " + resident.getName());
+                    residents.add(resident);
+                }
+                ResidentAdapter residentAdapter = new ResidentAdapter(residents, getApplicationContext());
+                rv.setAdapter(residentAdapter);
+            } catch (Exception e){
+                Log.e("ERROR", e.getMessage(), e);
+            }
+
+        }
     }
 }
