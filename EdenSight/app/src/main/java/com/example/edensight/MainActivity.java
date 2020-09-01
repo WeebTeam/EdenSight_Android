@@ -17,7 +17,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -33,8 +35,9 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private EditText searchFilter;
+    RecyclerView recyclerView;
+    EditText searchFilter;
+    ProgressBar mainProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         searchFilter = findViewById(R.id.search_filter);
+        mainProgressBar = findViewById(R.id.main_progressBar);
 
         new RetrieveMainActivityTask(this, recyclerView, searchFilter).execute();
 
-
-        /*
-        */
     }
 
     @Override
@@ -75,10 +76,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         logout();
     }
-
-    /*
-
-    }*/
 
     public void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -120,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
             this.filterText = filterText;
         }
 
+        protected void onPreExecute(){
+            mainProgressBar.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected String doInBackground(Void... voids) {
             String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
@@ -150,10 +151,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String response){
-
             if (response == null){
                 response = "THERE WAS AN ERROR";
             }
+
+            mainProgressBar.setVisibility(View.GONE);
 
             try{
                 JSONArray jsonResidents = new JSONArray(response);

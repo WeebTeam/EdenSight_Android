@@ -16,12 +16,25 @@
         android:inputType="textPersonName"
         android:hint="Search by Name" />
 
+    <ProgressBar
+        android:id="@+id/main_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/resident_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/search_filter"/>
+        android:layout_below="@id/search_filter">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
