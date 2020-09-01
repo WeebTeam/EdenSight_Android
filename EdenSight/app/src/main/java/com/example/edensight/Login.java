@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -32,7 +33,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Login extends AppCompatActivity {
 
-    TextView testTextView;
     EditText usernameInput, passwordInput;
     Button loginBtn;
     ProgressBar progressBar;
@@ -42,18 +42,17 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        testTextView = findViewById(R.id.test_textView);
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginBtn = findViewById(R.id.loginBtn);
         progressBar = findViewById(R.id.login_progressBar);
 
-        // Check if login details are correct (Use staff [staff] for now until database is available)
+        // Check if login details are correct
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Testing HTTP Connection with API
-                new RetrieveLoginTask().execute();
+                // Establishes HTTPS connection to API to retrieve user data
+                new RetrieveLoginTask(getApplicationContext(), usernameInput.getText().toString(), passwordInput.getText().toString()).execute();
             }
         });
     }
@@ -88,31 +87,33 @@ public class Login extends AppCompatActivity {
 
     // Internal class used to retrieve data
     class RetrieveLoginTask extends AsyncTask<Void, Void, String>{
-        private Exception exception;
+        private Context c;
+        private String username, password;
+
+        public RetrieveLoginTask(Context c, String username, String password){
+            this.c = c;
+            this.username = username;
+            this.password = password;
+        }
 
         protected void onPreExecute(){
             progressBar.setVisibility(View.VISIBLE);
-            testTextView.setText("Not Sent Yet.");
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            // Accuweather API testing URL: http://dataservice.accuweather.com/locations/v1/cities/search?apikey=n6D2aIqpQYd6trDQHw7qesXY1cppKgz5&q=kuching
-            String urlText = "https://braserver.mooo.com/edensight/users/all";
-            /*
+            String urlText = "https://braserver.mooo.com/edensight/api/users/all";
             try {
                 URL url = new URL(urlText);
                 HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-                urlConnection.setRequestProperty("Authorization", "Basic cG9nZ2Vyczp0dXR1cnU=");
+                String encoded = java.util.Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+                urlConnection.setRequestProperty("Authorization", "Basic " + encoded);
                 int responseCode = urlConnection.getResponseCode();
-
                 return String.valueOf(responseCode);
-
             } catch (Exception e){
                 Log.e("ERROR", e.getMessage(), e);
                 return null;
-            }*/
-            return "poggers";
+            }
         }
 
         protected void onPostExecute(String response){
@@ -120,23 +121,17 @@ public class Login extends AppCompatActivity {
                 response = "THERE WAS AN ERROR";
             }
             progressBar.setVisibility(View.GONE);
-            // Cut to 50 characters
-            response = response.substring(0, Math.min(response.length(), 50));
-            testTextView.setText(response);
 
-            // This part to validate user input with database (WIP)
+            // This part to validate user input with database
             // Correct Login
-            if (usernameInput.getText().toString().equals("staff") && passwordInput.getText().toString().equals("staff")){
-                Toast toast = Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT);
-                toast.show();
+            if (response.equals("200")){
+                Toast.makeText(c, "Login Successful!", Toast.LENGTH_SHORT).show();
                 // Moves to Main Activity
                 Intent loginIntent = new Intent (getApplicationContext(), MainActivity.class);
                 startActivity(loginIntent);
                 finish();
-
             } else { // Incorrect Login
-                Toast toast = Toast.makeText(getApplicationContext(),"Please provide the correct login details.", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(c, "Please provide the correct user details.", Toast.LENGTH_SHORT).show();
             }
         }
     }
