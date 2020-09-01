@@ -82,4 +82,9 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     public int getItemCount() {
         return residentList.size();
     }
+
+    void filterList(ArrayList<Resident> filteredList){
+        residentList = filteredList;
+        notifyDataSetChanged();
+    }
 }

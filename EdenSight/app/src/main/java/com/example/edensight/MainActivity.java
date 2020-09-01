@@ -46,22 +46,13 @@ public class MainActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        new RetrieveMainActivityTask(this, recyclerView).execute();
-
         searchFilter = findViewById(R.id.search_filter);
+
+        new RetrieveMainActivityTask(this, recyclerView, searchFilter).execute();
+
+
         /*
-        searchFilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                filter(s.toString());
-            }
-        });*/
+        */
     }
 
     @Override
@@ -86,15 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-    private void filter(String text){
-        ArrayList<Resident> filteredList = new ArrayList<>();
 
-        for (Resident item : residents){
-            if (item.getName().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(item);
-            }
-        }
-        residentAdapter.filterList(filteredList);
     }*/
 
     public void logout(){
@@ -127,16 +110,19 @@ public class MainActivity extends AppCompatActivity {
     public class RetrieveMainActivityTask extends AsyncTask<Void, Void, String>{
         Context c;
         RecyclerView rv;
+        EditText filterText;
         ArrayList<Resident> residents = new ArrayList<>();
+        ResidentAdapter residentAdapter;
 
-        public RetrieveMainActivityTask(Context c, RecyclerView rv){
+        public RetrieveMainActivityTask(Context c, RecyclerView rv, EditText filterText){
             this.c = c;
             this.rv = rv;
+            this.filterText = filterText;
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            String urlText = "https://braserver.mooo.com/edensight/residents/all";
+            String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
             try {
                 URL url = new URL(urlText);
                 HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
@@ -179,12 +165,35 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("INFO", "Name: " + resident.getName());
                     residents.add(resident);
                 }
-                ResidentAdapter residentAdapter = new ResidentAdapter(residents, getApplicationContext());
+                residentAdapter = new ResidentAdapter(residents, getApplicationContext());
                 rv.setAdapter(residentAdapter);
+                searchFilter.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        filter(s.toString());
+                    }
+                });
             } catch (Exception e){
                 Log.e("ERROR", e.getMessage(), e);
             }
 
+        }
+
+        private void filter(String text) {
+            ArrayList<Resident> filteredList = new ArrayList<>();
+
+            for (Resident item : residents) {
+                if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                    filteredList.add(item);
+                }
+            }
+            residentAdapter.filterList(filteredList);
         }
     }
 }
