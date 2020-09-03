@@ -1,5 +1,6 @@
 package com.example.edensight;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,18 +24,16 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     private Context context;
 
     static class ResidentViewHolder extends RecyclerView.ViewHolder{
-        ImageView picture;
         Button testButton;
         TextView name, roomNumber, status, caretaker;
 
         ResidentViewHolder(@NonNull View itemView) {
             super(itemView);
-            picture = itemView.findViewById(R.id.resident_picture);
             name = itemView.findViewById(R.id.resident_name);
             roomNumber = itemView.findViewById(R.id.resident_roomNumber);
             status = itemView.findViewById(R.id.resident_status);
             caretaker = itemView.findViewById(R.id.resident_caretaker);
-            testButton = itemView.findViewById(R.id.test_button);
+            testButton = itemView.findViewById(R.id.details_button);
         }
     }
 
@@ -64,9 +63,6 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
         holder.roomNumber.setText(roomNum);
         holder.status.setText(status);
         holder.caretaker.setText(caretaker);
-
-        // Loading Image from URL via Custom Picasso Class
-        PicassoClient.downloadImage(context, resident.getImageURL(), holder.picture);
 
         holder.testButton.setOnClickListener(new View.OnClickListener() {
             @Override

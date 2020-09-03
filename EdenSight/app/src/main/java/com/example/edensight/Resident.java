@@ -3,17 +3,14 @@ package com.example.edensight;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 public class Resident implements Parcelable {
-    private String name, age, imageURL, allocationDate, roomNumber, status, caretaker;
+    private String name, age, allocationDate, roomNumber, status, caretaker;
 
     public Resident() { }
 
-    public Resident(String name, String age, String imageURL, String allocationDate, String roomNumber, String status, String caretaker) {
+    public Resident(String name, String age, String allocationDate, String roomNumber, String status, String caretaker) {
         this.name = name;
         this.age = age;
-        this.imageURL = imageURL;
         this.allocationDate = allocationDate;
         this.roomNumber = roomNumber;
         this.status = status;
@@ -23,7 +20,6 @@ public class Resident implements Parcelable {
     protected Resident(Parcel in) {
         name = in.readString();
         age = in.readString();
-        imageURL = in.readString();
         allocationDate = in.readString();
         roomNumber = in.readString();
         status = in.readString();
@@ -50,20 +46,10 @@ public class Resident implements Parcelable {
         this.name = name;
     }
 
-    public String getAge() {
-        return age;
-    }
+    public String getAge() { return age; }
 
     public void setAge(String age) {
         this.age = age;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
     }
 
     public String getAllocationDate() { return allocationDate; }
@@ -91,7 +77,6 @@ public class Resident implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(age);
-        dest.writeString(imageURL);
         dest.writeString(allocationDate);
         dest.writeString(roomNumber);
         dest.writeString(status);

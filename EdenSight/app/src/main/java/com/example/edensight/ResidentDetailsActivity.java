@@ -19,7 +19,6 @@ import android.widget.TextView;
 public class ResidentDetailsActivity extends FragmentActivity {
 
     Resident selectedResident;
-    ImageView residentImage;
     TextView residentName, residentAge, residentAllocateDate, residentRoomNumber, residentStatus, residentCaretaker;
     ViewPager pager;
 
@@ -32,7 +31,6 @@ public class ResidentDetailsActivity extends FragmentActivity {
         Intent intent = getIntent();
         selectedResident = intent.getParcelableExtra("resident");
 
-        residentImage = findViewById(R.id.resident_detail_picture);
         residentName = findViewById(R.id.resident_detail_name);
         residentAge = findViewById(R.id.resident_detail_age);
         residentAllocateDate = findViewById(R.id.resident_detail_allocateDate);
@@ -41,7 +39,6 @@ public class ResidentDetailsActivity extends FragmentActivity {
         residentCaretaker = findViewById(R.id.resident_detail_caretaker);
         pager = findViewById(R.id.resident_detail_viewpager);
 
-        PicassoClient.downloadImage(this, selectedResident.getImageURL(), residentImage);
         String name = getString(R.string.name) + " " + selectedResident.getName();
         String age = getString(R.string.age) + " " + selectedResident.getAge();
         String allocDate = getString(R.string.alloc_date) + " " + selectedResident.getAllocationDate();

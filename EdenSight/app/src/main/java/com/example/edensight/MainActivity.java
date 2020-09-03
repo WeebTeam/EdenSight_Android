@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // Logout
                 Intent intent = new Intent(getApplicationContext(), Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("INFO", jsonResidents.get(0).toString());
                 for (int i = 0; i < jsonResidents.length(); i++) {
                     JSONObject object = jsonResidents.getJSONObject(i);
-                    Resident resident = new Resident(object.get("name").toString(), "0", "https://image.shutterstock.com/image-photo/boy-praying-god-hands-held-600w-1064089271.jpg", "sampleDate", object.get("room").toString(), object.get("status").toString(), object.get("caretaker").toString());
+                    Resident resident = new Resident(object.get("name").toString(), "0", "sampleDate", object.get("room").toString(), object.get("status").toString(), object.get("caretaker").toString());
                     Log.i("INFO", "Name: " + resident.getName());
                     residents.add(resident);
                 }
