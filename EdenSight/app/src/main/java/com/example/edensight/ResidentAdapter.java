@@ -22,6 +22,7 @@ import java.util.List;
 public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ResidentViewHolder> {
     private List<Resident> residentList;
     private Context context;
+    private String username, password;
 
     static class ResidentViewHolder extends RecyclerView.ViewHolder{
         Button testButton;
@@ -37,9 +38,11 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
         }
     }
 
-    ResidentAdapter(List<Resident> residentList, Context context){
+    ResidentAdapter(List<Resident> residentList, Context context, String username, String password){
         this.residentList = residentList;
         this.context = context;
+        this.username = username;
+        this.password = password;
     }
 
     @NonNull
@@ -69,6 +72,8 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
             public void onClick(View v) {
                 Intent intent = new Intent(context, ResidentDetailsActivity.class);
                 intent.putExtra("resident", resident);
+                intent.putExtra("username", username);
+                intent.putExtra("password", password);
                 context.startActivity(intent);
             }
         });

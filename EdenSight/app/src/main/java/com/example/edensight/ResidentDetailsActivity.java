@@ -21,6 +21,7 @@ public class ResidentDetailsActivity extends FragmentActivity {
     Resident selectedResident;
     TextView residentName, residentAge, residentAllocateDate, residentRoomNumber, residentStatus, residentCaretaker;
     ViewPager pager;
+    String username, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class ResidentDetailsActivity extends FragmentActivity {
         // Retrieve resident info from previous activity
         Intent intent = getIntent();
         selectedResident = intent.getParcelableExtra("resident");
+        username = intent.getStringExtra("username");
+        password = intent.getStringExtra("password");
 
         residentName = findViewById(R.id.resident_detail_name);
         residentAge = findViewById(R.id.resident_detail_age);
@@ -62,6 +65,8 @@ public class ResidentDetailsActivity extends FragmentActivity {
     public void onBackPressed() {
         if (pager.getCurrentItem() == 0){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("password", password);
             startActivity(intent);
             finish();
         } else {

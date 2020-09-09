@@ -1,6 +1,5 @@
 package com.example.edensight;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,24 +7,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -117,21 +106,20 @@ public class Login extends AppCompatActivity {
         }
 
         protected void onPostExecute(String response){
-            if (response == null){
-                response = "THERE WAS AN ERROR";
-            }
             progressBar.setVisibility(View.GONE);
 
-            // This part to validate user input with database
-            // Correct Login
             if (response.equals("200")){
                 Toast.makeText(c, "Login Successful!", Toast.LENGTH_SHORT).show();
                 // Moves to Main Activity
                 Intent loginIntent = new Intent (getApplicationContext(), MainActivity.class);
+                loginIntent.putExtra("username", username);
+                loginIntent.putExtra("password", password);
                 startActivity(loginIntent);
                 finish();
-            } else { // Incorrect Login
+            } else if(response.equals("401")){
                 Toast.makeText(c, "Please provide the correct user details.", Toast.LENGTH_SHORT).show();
+            } else { // Incorrect Login
+                Toast.makeText(c, "Please ensure that the device has Internet connection.", Toast.LENGTH_SHORT).show();
             }
         }
     }
