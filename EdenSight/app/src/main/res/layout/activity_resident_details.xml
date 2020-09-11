@@ -9,86 +9,16 @@
     android:background="@color/greenBackground"
     tools:context=".ResidentDetailsActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/details_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <TextView
-        android:id="@+id/resident_detail_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_allocateDate"/>
-
-    <TextView
-        android:id="@+id/resident_detail_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/age"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toRightOf="@id/details_guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_roomNumber"/>
-
-    <TextView
-        android:id="@+id/resident_detail_allocateDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alloc_date"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_name"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_status" />
-
-    <TextView
-        android:id="@+id/resident_detail_roomNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/room_number"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toRightOf="@id/details_guideline"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_age"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_caretaker"/>
-
-    <TextView
-        android:id="@+id/resident_detail_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/status"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_allocateDate"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_viewpager"/>
-
-    <TextView
-        android:id="@+id/resident_detail_caretaker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/caretaker"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toRightOf="@id/details_guideline"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_roomNumber"
-        app:layout_constraintBottom_toTopOf="@id/resident_detail_viewpager"/>
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/resident_detail_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/resident_detail_status">
+        android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/resident_detail_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,4 +17,6 @@
     <string name="avg_ecg">Avg. HR: </string>
     <string name="avg_bp">Avg. BP: </string>
     <string name="avg_blood_sugar">Avg. BG: </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
