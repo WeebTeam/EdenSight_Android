@@ -2,6 +2,7 @@
     <string name="app_name">EdenSight</string>
     // Standard Text
     <string name="view_details">View Details</string>
+    <string name="placeholder">Placeholder Yeet!</string>
 
     // Used in Resident View Holder
     <string name="name">Name: </string>
@@ -11,12 +12,13 @@
     <string name="status">Status: </string>
     <string name="caretaker">Caretaker: </string>
 
-    // Used in Details View Holder
-    <string name="date">Date: </string>
-    <string name="avg_temp">Avg. BT: </string>
-    <string name="avg_ecg">Avg. HR: </string>
-    <string name="avg_bp">Avg. BP: </string>
-    <string name="avg_blood_sugar">Avg. BG: </string>
+    // Used in Details (General) View Holder
+    <string name="resident_name">Resident Name</string>
+    <string name="resident_age">Resident Age</string>
+    <string name="resident_caretaker">Caretaker</string>
+    <string name="resident_room_number">Room Number</string>
+    <string name="resident_alloc_date">Allocated Date</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
