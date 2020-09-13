@@ -6,16 +6,268 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResidentDetailedFragment">
+    tools:context=".ResidentDetailedFragment"
+    android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/detailed_text"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/detailed_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pepega"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <TextView
+        android:id="@+id/resident_detailed_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_name"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_caretaker_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_caretaker"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_caretaker_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_caretaker"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_name_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_room_number_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_caretaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_name"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_room_number"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_room_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_roomNo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_caretaker_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_gender_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_room_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_caretaker"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_gender"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_gender_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_gender"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_room_number_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_dob_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_room_number"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_dob"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_dob_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_dob"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_gender_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_ic_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_dob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_gender"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_ic"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_ic_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_ic"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_dob_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_nation_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_dob"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_nation"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_nation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_nation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_ic_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_phone_number_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_nation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_ic"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_phone_number"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_phone_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_phoneNo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_nation_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_guardian_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_nation"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_guardian"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_guardian_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_guardian"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_phone_number_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_emergency_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_guardian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_phone_number"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_emergency"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_emergency_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_emergency"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_guardian_title"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_address_title"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_emergency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_guardian"
+        app:layout_constraintBottom_toTopOf="@id/resident_detailed_address"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_address_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resident_address"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_emergency_title"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resident_detailed_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/detailed_guideline"
+        app:layout_constraintTop_toBottomOf="@id/resident_detailed_emergency"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

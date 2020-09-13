@@ -12,12 +12,26 @@
     <string name="status">Status: </string>
     <string name="caretaker">Caretaker: </string>
 
-    // Used in Details (General) View Holder
+    // Used in Details (Detailed) Fragment
     <string name="resident_name">Resident Name</string>
-    <string name="resident_age">Resident Age</string>
     <string name="resident_caretaker">Caretaker</string>
-    <string name="resident_room_number">Room Number</string>
-    <string name="resident_alloc_date">Allocated Date</string>
+    <string name="resident_roomNo">Room Number</string>
+    <string name="resident_gender">Gender</string>
+    <string name="resident_dob">Date of birth</string>
+    <string name="resident_ic">IC No.</string>
+    <string name="resident_nation">Nationality</string>
+    <string name="resident_phoneNo">Resident\'s Phone No.</string>
+    <string name="resident_guardian">Guardian\'s Name</string>
+    <string name="resident_emergency">Emergency Phone No.</string>
+    <string name="resident_address">Address</string>
+
+    // Used in Details (Health) Fragment
+    <string name="health_weight">Weight (kg)</string>
+    <string name="health_height">Height (cm)</string>
+    <string name="health_blood">Blood Type</string>
+    <string name="health_conditions">Health Conditions</string>
+    <string name="health_allergies">Allergies</string>
+    <string name="health_medication">Medication</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
