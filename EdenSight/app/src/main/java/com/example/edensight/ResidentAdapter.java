@@ -1,23 +1,18 @@
 package com.example.edensight;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ResidentViewHolder> {
     private List<Resident> residentList;
@@ -25,16 +20,14 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     private String username, password;
 
     static class ResidentViewHolder extends RecyclerView.ViewHolder{
-        Button testButton;
-        TextView name, roomNumber, status, caretaker;
+        TextView name, roomNo, bpm, spo2;
 
         ResidentViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.resident_name);
-            roomNumber = itemView.findViewById(R.id.resident_roomNumber);
-            status = itemView.findViewById(R.id.resident_status);
-            caretaker = itemView.findViewById(R.id.resident_caretaker);
-            testButton = itemView.findViewById(R.id.details_button);
+            name = itemView.findViewById(R.id.person_name);
+            roomNo = itemView.findViewById(R.id.person_roomNo);
+            bpm = itemView.findViewById(R.id.person_bpm);
+            spo2 = itemView.findViewById(R.id.person_spo2);
         }
     }
 
@@ -57,23 +50,26 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
         final Resident resident = residentList.get(position);
-        final String name = context.getString(R.string.name) + " " +  resident.getName();
-        String roomNum = context.getString(R.string.room_number) + " " + resident.getRoomNumber();
-        String status = context.getString(R.string.status) + " " + resident.getStatus();
-        String caretaker = context.getString(R.string.caretaker) + " " + resident.getCaretaker();
+        Random random = new Random();
+
+        String name = resident.getName();
+        String roomNum = resident.getRoomNumber();
+        String bpm = String.valueOf(random.nextInt(100-60) + 60) + "bpm";
+        String spo2 = String.valueOf(random.nextInt(99-97) + 97) + "%";
 
         holder.name.setText(name);
-        holder.roomNumber.setText(roomNum);
-        holder.status.setText(status);
-        holder.caretaker.setText(caretaker);
+        holder.roomNo.setText(roomNum);
+        holder.bpm.setText(bpm);
+        holder.spo2.setText(spo2);
 
-        holder.testButton.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ResidentDetailsActivity.class);
                 intent.putExtra("resident", resident);
                 intent.putExtra("username", username);
                 intent.putExtra("password", password);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

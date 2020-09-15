@@ -6,71 +6,83 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/greenBackground">
+    android:background="@android:color/white">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/resident_guideline"
+        android:id="@+id/person_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.62"/>
 
-    <TextView
-        android:id="@+id/resident_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:textSize="16sp"
+    <ImageView
+        android:id="@+id/person_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/placeholder"
+        android:contentDescription="@string/placeholder"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/resident_status"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:id="@+id/resident_roomNumber"
+        android:id="@+id/person_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/room_number"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toRightOf="@id/resident_guideline"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/person_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/resident_caretaker"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintBottom_toTopOf="@id/person_bpm" />
 
     <TextView
-        android:id="@+id/resident_status"
+        android:id="@+id/person_roomNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/status"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resident_name"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"/>
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/person_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/person_spo2"/>
 
     <TextView
-        android:id="@+id/resident_caretaker"
+        android:id="@+id/person_bpm_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/caretaker"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toRightOf="@id/resident_guideline"
-        app:layout_constraintTop_toBottomOf="@id/resident_roomNumber"
-        android:layout_marginTop="10dp"/>
+        android:text="@string/person_bpm"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/person_image"
+        app:layout_constraintTop_toBottomOf="@id/person_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/person_bpm"/>
 
-    <Button
-        android:id="@+id/details_button"
+    <TextView
+        android:id="@+id/person_bpm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue"
-        android:text="@string/view_details"
-        android:textSize="16sp"
-        android:textColor="@android:color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resident_status"/>
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/person_bpm_title"
+        app:layout_constraintTop_toBottomOf="@id/person_name"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        android:id="@+id/person_spo2_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/person_spo2"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/person_guideline"
+        app:layout_constraintTop_toBottomOf="@id/person_roomNo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/person_spo2"/>
+
+    <TextView
+        android:id="@+id/person_spo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/person_spo2_title"
+        app:layout_constraintTop_toBottomOf="@id/person_roomNo"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/history_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45"/>
+
+    <TextView
+        android:id="@+id/history_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/history_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/history_bpm_title"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/history_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/history_bpm"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_bpm_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/history_avg_bpm"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/history_date_title"
+        app:layout_constraintBottom_toTopOf="@id/history_spo2_title"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_bpm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/history_guideline"
+        app:layout_constraintTop_toBottomOf="@id/history_date"
+        app:layout_constraintBottom_toTopOf="@id/history_spo2"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_spo2_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/history_avg_spo2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/history_bpm_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_spo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/history_guideline"
+        app:layout_constraintTop_toBottomOf="@id/history_bpm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

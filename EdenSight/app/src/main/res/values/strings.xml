@@ -2,15 +2,20 @@
     <string name="app_name">EdenSight</string>
     // Standard Text
     <string name="view_details">View Details</string>
-    <string name="placeholder">Placeholder Yeet!</string>
+    <string name="placeholder">Placeholder</string>
+
+    // Used in Login Page
+    <string name="app_logo">Application Logo</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">Login</string>
+
+    // Used in Landing Page (Resident List)
+    <string name="search_text">Search by Name</string>
 
     // Used in Resident View Holder
-    <string name="name">Name: </string>
-    <string name="age">Age: </string>
-    <string name="alloc_date">Date: </string>
-    <string name="room_number">Room Number: </string>
-    <string name="status">Status: </string>
-    <string name="caretaker">Caretaker: </string>
+    <string name="person_bpm">BPM:\u0020</string>
+    <string name="person_spo2">SpO2:\u0020</string>
 
     // Used in Details (Detailed) Fragment
     <string name="resident_name">Resident Name</string>
@@ -32,6 +37,11 @@
     <string name="health_conditions">Health Conditions</string>
     <string name="health_allergies">Allergies</string>
     <string name="health_medication">Medication</string>
+
+    // Used in Details (History) Fragment
+    <string name="history_avg_bpm">Average BPM</string>
+    <string name="history_avg_spo2">Average SpO2</string>
+    <string name="history_date">Date</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

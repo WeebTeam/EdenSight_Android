@@ -3,16 +3,24 @@ package com.example.edensight;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResidentHistoryFragment extends Fragment {
 
     private static final String HIS_RESIDENT = "His_Resident";
     private Resident resident;
+    RecyclerView historyRecyclerView;
+    HistoryAdapter historyAdapter;
+    List<String> dataList = new ArrayList<String>();
 
     public ResidentHistoryFragment() { }
 
@@ -36,8 +44,21 @@ public class ResidentHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_resident_history, container, false);
-        TextView textView = rootView.findViewById(R.id.history_text);
-        textView.setText("Room Number: " + resident.getRoomNumber());
+        dataList.add("date1");
+        dataList.add("date2");
+        dataList.add("date3");
+        dataList.add("date1");
+        dataList.add("date2");
+        dataList.add("date3");
+        dataList.add("date1");
+        dataList.add("date2");
+        dataList.add("date3");
+        historyRecyclerView = rootView.findViewById(R.id.history_recyclerView);
+        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        historyRecyclerView.addItemDecoration(dividerItemDecoration);
+        historyAdapter = new HistoryAdapter(getActivity(), dataList);
+        historyRecyclerView.setAdapter(historyAdapter);
         return rootView;
     }
 }
