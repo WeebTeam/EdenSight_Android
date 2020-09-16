@@ -17,6 +17,9 @@
     <string name="person_bpm">BPM:\u0020</string>
     <string name="person_spo2">SpO2:\u0020</string>
 
+    // Used in Details (General) Fragment
+    <string name="general_graph_title">Beats per minute over the previous 5 days</string>
+
     // Used in Details (Detailed) Fragment
     <string name="resident_name">Resident Name</string>
     <string name="resident_caretaker">Caretaker</string>
@@ -25,9 +28,9 @@
     <string name="resident_dob">Date of birth</string>
     <string name="resident_ic">IC No.</string>
     <string name="resident_nation">Nationality</string>
-    <string name="resident_phoneNo">Resident\'s Phone No.</string>
+    <string name="resident_phoneNo">Resident\'s Tel.</string>
     <string name="resident_guardian">Guardian\'s Name</string>
-    <string name="resident_emergency">Emergency Phone No.</string>
+    <string name="resident_emergency">Emergency Tel.</string>
     <string name="resident_address">Address</string>
 
     // Used in Details (Health) Fragment

@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <ImageView
         android:id="@+id/bpm_image"
@@ -71,11 +71,23 @@
         app:layout_constraintTop_toBottomOf="@id/spo2_image"
         android:background="@color/greenBackground"/>
 
+    <TextView
+        android:id="@+id/general_graph_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/general_graph_title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/general_guideline_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/general_graph"/>
+
     <com.github.mikephil.charting.charts.LineChart
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:id="@+id/general_graph"
-        app:layout_constraintTop_toBottomOf="@id/general_guideline_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/general_graph_title"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@android:color/white"
         android:layout_margin="10dp">

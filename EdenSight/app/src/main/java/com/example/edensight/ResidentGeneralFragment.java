@@ -24,6 +24,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ResidentGeneralFragment extends Fragment {
 
@@ -59,16 +60,16 @@ public class ResidentGeneralFragment extends Fragment {
         List<String> dates = new ArrayList<>();
         List<Double> amounts = new ArrayList<>();
 
-        dates.add("Monday");
-        dates.add("Tuesday");
-        dates.add("Wednesday");
-        dates.add("Thursday");
-        dates.add("Friday");
-        amounts.add(10.5);
-        amounts.add(9.0);
-        amounts.add(50.5);
-        amounts.add(5.2);
-        amounts.add(25.5);
+        dates.add("day1");
+        dates.add("day2");
+        dates.add("day3");
+        dates.add("day4");
+        dates.add("day5");
+        for (int i = 0; i < 5; i++){
+            Random random = new Random();
+            double value = 60 + random.nextDouble() * (100 - 60);
+            amounts.add(value);
+        }
 
         renderData(dates, amounts);
 
@@ -87,7 +88,7 @@ public class ResidentGeneralFragment extends Fragment {
         public String getAxisLabel(float value, AxisBase axis) {
             int integer = (int) value;
             integer = integer + 1;
-            return String.valueOf(integer);
+            return "Day " + integer;
         }
     }
 
@@ -141,7 +142,7 @@ public class ResidentGeneralFragment extends Fragment {
         YAxis leftAxis = volumeReportChart.getAxisLeft();
         leftAxis.removeAllLimitLines();
 
-        leftAxis.setAxisMaximum(60f);
+        leftAxis.setAxisMaximum(100f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
