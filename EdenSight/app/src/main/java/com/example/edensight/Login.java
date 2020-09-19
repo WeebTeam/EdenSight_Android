@@ -91,7 +91,7 @@ public class Login extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String urlText = "https://braserver.mooo.com/edensight/api/users/all";
+            String urlText = "https://braserver.mooo.com/edensight/api/auth/login";
             try {
                 URL url = new URL(urlText);
                 HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
@@ -107,7 +107,6 @@ public class Login extends AppCompatActivity {
 
         protected void onPostExecute(String response){
             progressBar.setVisibility(View.GONE);
-
             if (response.equals("200")){
                 Toast.makeText(c, "Login Successful!", Toast.LENGTH_SHORT).show();
                 // Moves to Main Activity
