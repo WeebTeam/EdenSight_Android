@@ -214,7 +214,29 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray jsonResidents = new JSONArray(response);
                     for (int i = 0; i < jsonResidents.length(); i++) {
                         JSONObject object = jsonResidents.getJSONObject(i);
-                        Resident resident = new Resident(object.get("name").toString(), "0", "sampleDate", object.get("room").toString(), object.get("status").toString(), object.get("caretaker").toString());
+                        String address = object.get("streetAdd").toString() + ", " + object.get("streetAdd2").toString() + ", " + object.get("postal").toString() + ", " + object.get("city").toString() + ", " + object.get("state").toString();
+
+
+                        String conditionsLiteral = object.get("healthConditions").toString().replace("[", "").replace("]", "");
+                        String[] conditions = conditionsLiteral.split(",");
+                        if (conditions[0].equals("")){
+                            conditions[0] = "- (No Known Health Conditions)";
+                        }
+                        String allergiesLiteral = object.get("allergies").toString().replace("[", "").replace("]", "");
+                        String[] allergies = allergiesLiteral.split(",");
+                        if (allergies[0].equals("")){
+                            allergies[0] = "- (No Known Allergies)";
+                        }
+                        String medicationLiteral = object.get("medication").toString().replace("[", "").replace("]", "");
+                        String[] medication = medicationLiteral.split(",");
+                        if (medication[0].equals("")){
+                            medication[0] = "- (No Known Medications)";
+                        }
+
+                        Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("enrollDate").toString(), object.get("room").toString(), object.get("status").toString(), object.get("status").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), address, object.getInt("_id"), object.getDouble("weight"), object.getDouble("height"));
+                        resident.setConditions(conditions);
+                        resident.setAllergies(allergies);
+                        resident.setMedication(medication);
                         residents.add(resident);
                     }
                     residentAdapter = new ResidentAdapter(residents, getApplicationContext(), username, password);

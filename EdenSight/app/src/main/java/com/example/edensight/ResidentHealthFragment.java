@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,7 @@ public class ResidentHealthFragment extends Fragment {
 
     TextView weight, height, blood;
     ListView conditions, allergies, medication;
-
-    String[] conditionsArray = {"Back Problem","Asthma", "Migraine", "Back Problem","Asthma", "Migraine"},
-    allergiesArray = {"Penicillin", "Aspirin", "Peanuts"},
-    medicationArray = {"Painkiller once a day", "Flu Medicine 3 times a day", "Medicine X after breakfast", "Another one", "And another one"};
-
+    String[] conditionsArray, allergiesArray, medicationArray;
     ArrayAdapter conditionsAdapter, allergiesAdapter, medicationAdapter;
 
     public ResidentHealthFragment() { }
@@ -55,6 +52,13 @@ public class ResidentHealthFragment extends Fragment {
         medication = rootView.findViewById(R.id.health_medication);
 
         // Assign values to text here when values are available in database
+        weight.setText(": " + resident.getWeight());
+        height.setText(": " + resident.getHeight());
+        blood.setText(": " + resident.getBloodType());
+        conditionsArray = resident.getConditions();
+        allergiesArray = resident.getAllergies();
+        medicationArray = resident.getMedication();
+
         conditionsAdapter = new ArrayAdapter<String>(getActivity(), R.layout.listview, conditionsArray);
         allergiesAdapter = new ArrayAdapter<String>(getActivity(), R.layout.listview, allergiesArray);
         medicationAdapter = new ArrayAdapter<String>(getActivity(), R.layout.listview, medicationArray);

@@ -53,6 +53,14 @@ public class ResidentDetailedFragment extends Fragment {
         name.setText(": " + resident.getName());
         caretaker.setText(": " + resident.getCaretaker());
         roomNo.setText(": " + resident.getRoomNumber());
+        gender.setText(": " + resident.getGender());
+        dob.setText(": " + resident.getDob());
+        ic.setText(": " + resident.getIc());
+        nation.setText(": " + resident.getNationality());
+        phoneNo.setText(": " + resident.getTelNum());
+        guardian.setText(": " + resident.getGuardian());
+        emergency.setText(": " + resident.getEmergencyTel());
+        address.setText(": " + resident.getAddress());
 
         return rootView;
     }

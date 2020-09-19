@@ -119,7 +119,7 @@ public class Login extends AppCompatActivity {
             } else if(response.equals("401")){
                 Toast.makeText(c, "Please provide the correct user details.", Toast.LENGTH_SHORT).show();
             } else { // Incorrect Login
-                Toast.makeText(c, "Please ensure that the device has Internet connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(c, "Connection error. Server might be down or device does not have Internet connection.", Toast.LENGTH_SHORT).show();
             }
         }
     }
