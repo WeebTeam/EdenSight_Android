@@ -18,7 +18,7 @@
     <string name="person_spo2">SpO2:\u0020</string>
 
     // Used in Details (General) Fragment
-    <string name="general_graph_title">Beats per minute over the previous 5 days</string>
+    <string name="general_graph_title">Beats per Minute over 6 previous points in time</string>
 
     // Used in Details (Detailed) Fragment
     <string name="resident_name">Resident Name</string>
@@ -42,9 +42,10 @@
     <string name="health_medication">Medication</string>
 
     // Used in Details (History) Fragment
-    <string name="history_avg_bpm">Average BPM</string>
-    <string name="history_avg_spo2">Average SpO2</string>
+    <string name="history_avg_bpm">BPM</string>
+    <string name="history_avg_spo2">SpO2</string>
     <string name="history_date">Date</string>
+    <string name="history_time">Time</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

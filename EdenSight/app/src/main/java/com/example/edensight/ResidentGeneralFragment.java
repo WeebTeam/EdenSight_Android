@@ -1,14 +1,20 @@
 package com.example.edensight;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -22,9 +28,19 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.DoubleBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class ResidentGeneralFragment extends Fragment {
 
@@ -32,6 +48,7 @@ public class ResidentGeneralFragment extends Fragment {
     private Resident resident;
 
     private LineChart volumeReportChart;
+    private TextView bpmText, spo2Text, updateDate;
 
     public ResidentGeneralFragment() { }
 
@@ -56,23 +73,28 @@ public class ResidentGeneralFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_resident_general, container, false);
         volumeReportChart = rootView.findViewById(R.id.general_graph);
+        bpmText = rootView.findViewById(R.id.bpm_text);
+        spo2Text = rootView.findViewById(R.id.spo2_text);
+        updateDate = rootView.findViewById(R.id.updateDate);
 
-        List<String> dates = new ArrayList<>();
+        List<String> dates = resident.getUpdateDateList();
+        List<String> residentSpo2List = resident.getSpo2List();
         List<Double> amounts = new ArrayList<>();
+        List<String> residentBpmList = resident.getBpmList();
 
-        dates.add("day1");
-        dates.add("day2");
-        dates.add("day3");
-        dates.add("day4");
-        dates.add("day5");
-        for (int i = 0; i < 5; i++){
-            Random random = new Random();
-            double value = 60 + random.nextDouble() * (100 - 60);
-            amounts.add(value);
+        for (int i = 0; i < residentBpmList.size(); i++){
+            amounts.add(Double.parseDouble(residentBpmList.get(residentBpmList.size()-1-i)));
         }
 
-        renderData(dates, amounts);
+        String bpm = "BPM: " + residentBpmList.get(0) + "bpm";
+        bpmText.setText(bpm);
+        String spo2 = "SpO2: " + residentSpo2List.get(0) + "%";
+        spo2Text.setText(spo2);
+        String[] dataArray = dates.get(0).replace("T", ",").replace(".000Z", "").split(",");
+        String updateText = "Last updated: " + dataArray[0] + " at " + dataArray[1];
+        updateDate.setText(updateText);
 
+        renderData(dates, amounts);
         return rootView;
     }
 
@@ -86,9 +108,7 @@ public class ResidentGeneralFragment extends Fragment {
 
         @Override
         public String getAxisLabel(float value, AxisBase axis) {
-            int integer = (int) value;
-            integer = integer + 1;
-            return "Day " + integer;
+            return "";
         }
     }
 
@@ -121,7 +141,7 @@ public class ResidentGeneralFragment extends Fragment {
 
         xAxis.setDrawLimitLinesBehindData(true);
 
-        LimitLine ll1 = new LimitLine(30f,"Graph of Beats per Minute over 5 previous days");
+        LimitLine ll1 = new LimitLine(30f,"Graph of Beats per Minute over 6 previous points in time");
         ll1.setLineColor(getResources().getColor(R.color.greenBackground));
         ll1.setLineWidth(4f);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -152,7 +172,7 @@ public class ResidentGeneralFragment extends Fragment {
         volumeReportChart.getDescription().setEnabled(true);
         Description description = new Description();
 
-        description.setText("Days");
+        description.setText("Points in Time");
         description.setTextSize(15f);
         volumeReportChart.getDescription().setPosition(0f, 0f);
         volumeReportChart.setDescription(description);

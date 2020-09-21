@@ -20,7 +20,6 @@ public class ResidentHistoryFragment extends Fragment {
     private Resident resident;
     RecyclerView historyRecyclerView;
     HistoryAdapter historyAdapter;
-    List<String> dataList = new ArrayList<String>();
 
     public ResidentHistoryFragment() { }
 
@@ -44,20 +43,19 @@ public class ResidentHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_resident_history, container, false);
-        dataList.add("date1");
-        dataList.add("date2");
-        dataList.add("date3");
-        dataList.add("date1");
-        dataList.add("date2");
-        dataList.add("date3");
-        dataList.add("date1");
-        dataList.add("date2");
-        dataList.add("date3");
+        List<String> dateList = new ArrayList<>(), timeList = new ArrayList<>(), bpmList = resident.getBpmList(), spo2List = resident.getSpo2List(), rawDateList = resident.getUpdateDateList();
+
+        for (int i = 0; i < rawDateList.size(); i++){
+            String[] dataArray = rawDateList.get(i).replace("T", ",").replace(".000Z", "").split(",");
+            dateList.add(dataArray[0]);
+            timeList.add(dataArray[1]);
+        }
+
         historyRecyclerView = rootView.findViewById(R.id.history_recyclerView);
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         historyRecyclerView.addItemDecoration(dividerItemDecoration);
-        historyAdapter = new HistoryAdapter(getActivity(), dataList);
+        historyAdapter = new HistoryAdapter(getActivity(), dateList, timeList, bpmList, spo2List);
         historyRecyclerView.setAdapter(historyAdapter);
         return rootView;
     }

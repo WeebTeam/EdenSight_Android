@@ -20,7 +20,7 @@
         android:text="@string/history_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/history_bpm_title"
+        app:layout_constraintBottom_toTopOf="@id/history_time_title"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
@@ -34,6 +34,30 @@
         android:text="@string/placeholder"
         app:layout_constraintLeft_toRightOf="@id/history_guideline"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/history_time"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/history_time"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/history_date_title"
+        app:layout_constraintBottom_toTopOf="@id/history_bpm_title"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        app:layout_constraintLeft_toRightOf="@id/history_guideline"
+        app:layout_constraintTop_toBottomOf="@id/history_date"
         app:layout_constraintBottom_toTopOf="@id/history_bpm"
         android:textSize="16sp"/>
 
@@ -43,7 +67,7 @@
         android:layout_height="wrap_content"
         android:text="@string/history_avg_bpm"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/history_date_title"
+        app:layout_constraintTop_toBottomOf="@id/history_time_title"
         app:layout_constraintBottom_toTopOf="@id/history_spo2_title"
         android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
@@ -57,7 +81,7 @@
         android:layout_height="wrap_content"
         android:text="@string/placeholder"
         app:layout_constraintLeft_toRightOf="@id/history_guideline"
-        app:layout_constraintTop_toBottomOf="@id/history_date"
+        app:layout_constraintTop_toBottomOf="@id/history_time"
         app:layout_constraintBottom_toTopOf="@id/history_spo2"
         android:textSize="16sp"/>
 

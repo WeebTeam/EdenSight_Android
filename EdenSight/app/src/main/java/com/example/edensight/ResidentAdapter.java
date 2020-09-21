@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ResidentViewHolder> {
     private List<Resident> residentList;
@@ -50,12 +49,11 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
         final Resident resident = residentList.get(position);
-        Random random = new Random();
 
         String name = resident.getName();
         String roomNum = resident.getRoomNumber();
-        String bpm = String.valueOf(random.nextInt(100-60) + 60) + "bpm";
-        String spo2 = String.valueOf(random.nextInt(99-97) + 97) + "%";
+        String bpm = resident.getFirstBpmList() + "bpm";
+        String spo2 = resident.getFirstSpo2List() + "%";
 
         holder.name.setText(name);
         holder.roomNo.setText(roomNum);

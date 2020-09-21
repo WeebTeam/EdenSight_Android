@@ -3,11 +3,15 @@ package com.example.edensight;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Resident implements Parcelable {
-    private String name, dob, allocationDate, roomNumber, status, caretaker, gender, ic, nationality, bloodType, telNum, emergencyTel, guardian, address;
+    private String name, dob, allocationDate, roomNumber, status, caretaker, gender, ic, nationality, bloodType, telNum, emergencyTel, guardian, address, deviceAddr;
     private int id;
     private double weight, height;
     private String[] conditions, allergies, medication;
+    private List<String> bpm = new ArrayList<String>(), spo2 = new ArrayList<String>(), updateDate = new ArrayList<String>();
 
     public Resident() { }
 
@@ -52,6 +56,10 @@ public class Resident implements Parcelable {
         conditions = in.createStringArray();
         allergies = in.createStringArray();
         medication = in.createStringArray();
+        deviceAddr = in.readString();
+        bpm = in.createStringArrayList();
+        spo2 = in.createStringArrayList();
+        updateDate = in.createStringArrayList();
     }
 
     public static final Creator<Resident> CREATOR = new Creator<Resident>() {
@@ -146,6 +154,28 @@ public class Resident implements Parcelable {
 
     public void setMedication(String[] medication) { this.medication = medication; }
 
+    public String getDeviceAddr() { return deviceAddr; }
+
+    public void setDeviceAddr(String deviceAddr) { this.deviceAddr = deviceAddr; }
+
+    public List<String> getBpmList() { return bpm; }
+
+    public String getFirstBpmList() { return bpm.get(0); }
+
+    public void addBpmList(String value){ bpm.add(value); }
+
+    public List<String> getSpo2List() { return spo2; }
+
+    public String getFirstSpo2List() { return spo2.get(0); }
+
+    public void addSpo2List(String value){ spo2.add(value); }
+
+    public List<String> getUpdateDateList() { return updateDate; }
+
+    public String getFirstUpdateDate(){ return updateDate.get(0); }
+
+    public void addUpdateDateList(String value){ updateDate.add(value); }
+
     @Override
     public int describeContents() { return 0; }
 
@@ -171,5 +201,9 @@ public class Resident implements Parcelable {
         dest.writeStringArray(conditions);
         dest.writeStringArray(allergies);
         dest.writeStringArray(medication);
+        dest.writeString(deviceAddr);
+        dest.writeStringList(bpm);
+        dest.writeStringList(spo2);
+        dest.writeStringList(updateDate);
     }
 }

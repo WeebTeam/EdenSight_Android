@@ -10,15 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.Random;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
     private Context context;
-    private List<String> dataList;
+    private List<String> dateList, timeList, bpmList, spo2List;
 
-    public HistoryAdapter(Context context, List<String> dataList) {
+    public HistoryAdapter(Context context, List<String> dateList, List<String> timeList, List<String> bpmList, List<String> spo2List) {
         this.context = context;
-        this.dataList = dataList;
+        this.dateList = dateList;
+        this.timeList = timeList;
+        this.bpmList = bpmList;
+        this.spo2List = spo2List;
     }
 
     @NonNull
@@ -33,27 +35,26 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         // Not actual data, will modify soon
-        String date = dataList.get(position);
-        Random random = new Random();
-        String avgBpm = String.valueOf(random.nextInt(100-60) + 60);
-        String avgSpo2 = String.valueOf(random.nextInt(99-97) + 97);
+        String date = dateList.get(position), time = timeList.get(position), bpm = bpmList.get(position), spo2 = spo2List.get(position);
 
         holder.date.setText(": " + date);
-        holder.avgBpm.setText(": " + avgBpm);
-        holder.avgSpo2.setText(": " + avgSpo2);
+        holder.time.setText(": " +time);
+        holder.bpm.setText(": " + bpm + "bpm");
+        holder.spo2.setText(": " + spo2 + "%");
     }
 
     @Override
-    public int getItemCount() { return dataList.size(); }
+    public int getItemCount() { return dateList.size(); }
 
     static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        TextView date, avgBpm, avgSpo2;
+        TextView date, time, bpm, spo2;
 
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.history_date);
-            avgBpm = itemView.findViewById(R.id.history_bpm);
-            avgSpo2 = itemView.findViewById(R.id.history_spo2);
+            time = itemView.findViewById(R.id.history_time);
+            bpm = itemView.findViewById(R.id.history_bpm);
+            spo2 = itemView.findViewById(R.id.history_spo2);
         }
     }
 }
