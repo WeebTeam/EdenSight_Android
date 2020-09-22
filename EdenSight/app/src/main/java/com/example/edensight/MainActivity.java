@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean alarmIsRunning = false;
     final Handler alarmHandler = new Handler();
     String username, password;
+    ArrayList<Resident> residents = new ArrayList<>();
     List<String> deviceAddressList = new ArrayList<>();
 
     @Override
@@ -81,7 +82,15 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        new RetrieveMainActivityTask(this, recyclerView, searchFilter).execute();
+        // Ensures that all resident names are updated into the resient names list to be used in the alarm
+        RetrieveMainActivityTask secondTask = new RetrieveMainActivityTask(this, recyclerView, searchFilter);
+        try {
+            List<String> test = secondTask.execute().get();
+        } catch (ExecutionException e) {
+            Log.e("ERROR", e.getMessage(), e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Making sure that only 1 instance is running
         if (!alarmIsRunning) {
@@ -91,26 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Runnable class that checks vital signs data every 10 seconds
     Runnable alarmRun = new Runnable() {
-        int timer = 0;
         @Override
         public void run() {
-            timer += 5;
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "aye")
-                    .setSmallIcon(R.drawable.eden_logo)
-                    .setContentTitle("Message from EdenSight!")
-                    .setContentText(timer + " seconds have passed.")
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            Intent notificationIntent = new Intent(getApplicationContext(), ResidentDetailsActivity.class);
-            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(pendingIntent);
-
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.notify(0, builder.build());
-            alarmHandler.postDelayed(this, 5000);
+            new RetrieveVitalSignsAlarmTask().execute();
+            alarmHandler.postDelayed(this, 10000);
         }
     };
 
@@ -211,11 +206,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Async Task that gets the residents details and their respective vital signs data
     public class RetrieveMainActivityTask extends AsyncTask<Void, Void, List<String>>{
         Context c;
         RecyclerView rv;
         EditText filterText;
-        ArrayList<Resident> residents = new ArrayList<>();
+
         ResidentAdapter residentAdapter;
 
         public RetrieveMainActivityTask(Context c, RecyclerView rv, EditText filterText){
@@ -231,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected List<String> doInBackground(Void... voids) {
             String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
-            // Only 1 device for now
             List<String> vitalSignsUrls = new ArrayList<>();
             for (int i = 0; i < deviceAddressList.size(); i++){
                 if (deviceAddressList.get(i).equals("")){
@@ -241,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
                     vitalSignsUrls.add(urlData);
                 }
             }
-            //String vitalSignsUrl = "https://braserver.mooo.com/edensight/api/vitalsigns/00:a0:50:bd:75:55/6";
 
             try {
                 URL url = new URL(urlText);
@@ -383,6 +377,86 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Async Task that works with a Runnable class to constantly check the most recent vital signs data of all resident to check if they are in an emergency
+    public class RetrieveVitalSignsAlarmTask extends  AsyncTask<Void, Void, List<String>>{
+
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            List<String> vitalSignsUrls = new ArrayList<>();
+            for (int i = 0; i < deviceAddressList.size(); i++){
+                if (deviceAddressList.get(i).equals("")){
+                    continue;
+                } else {
+                    String urlData = "https://braserver.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/6";
+                    vitalSignsUrls.add(urlData);
+                }
+            }
+            try{
+                List<HttpsURLConnection> vitalSignsConnections = new ArrayList<>();
+                for (int i = 0; i < vitalSignsUrls.size(); i++){
+                    URL vitalSignsUrl = new URL(vitalSignsUrls.get(i));
+                    HttpsURLConnection vitalSignsUrlConnection = (HttpsURLConnection) vitalSignsUrl.openConnection();
+                    vitalSignsUrlConnection.setRequestMethod("GET");
+                    String encoded = java.util.Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+                    vitalSignsUrlConnection.setRequestProperty("Authorization", "Basic " + encoded);
+                    vitalSignsConnections.add(vitalSignsUrlConnection);
+                }
+                try {
+                    List<String> response = new ArrayList<>();
+                    for (int i = 0; i < vitalSignsConnections.size(); i++){
+                        BufferedReader vitalSignsReader = new BufferedReader(new InputStreamReader(vitalSignsConnections.get(i).getInputStream()));
+                        StringBuilder vitalSignsBuilder = new StringBuilder();
+                        String inline2;
+                        while ((inline2 = vitalSignsReader.readLine()) != null){
+                            vitalSignsBuilder.append(inline2).append("\n");
+                        }
+                        vitalSignsReader.close();
+                        response.add(vitalSignsBuilder.toString());
+                        JSONArray jsonVitalSignsArray = new JSONArray(vitalSignsBuilder.toString());
+                        JSONObject vitalSignsObject = jsonVitalSignsArray.getJSONObject(0);
+                        double bpm = vitalSignsObject.getDouble("heartRate");
+                        double spo2 = vitalSignsObject.getDouble("spO2");
+                        Resident resident = residents.get(i);
+                        String name = resident.getName();
+
+                        // Check if resident is in an emergency situation (bpm < 41.0 || bpm > 139.0) || spo2 < 95.0
+                        if ((bpm < 41.0 || bpm > 139.0) || spo2 < 95.0){
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "aye")
+                                    .setSmallIcon(R.drawable.eden_logo)
+                                    .setContentTitle("Alert From EdenSight!")
+                                    .setContentText("Resident " + name + "is having trouble. Please send help!")
+                                    .setAutoCancel(true)
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                            Intent notificationIntent = new Intent(getApplicationContext(), ResidentDetailsActivity.class);
+                            notificationIntent.putExtra("resident", resident);
+                            notificationIntent.putExtra("username", username);
+                            notificationIntent.putExtra("password", password);
+                            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            builder.setContentIntent(pendingIntent);
+
+                            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                            manager.notify(0, builder.build());
+                        }
+
+                        return response;
+                    }
+
+                } finally {
+                    for (int i = 0; i < vitalSignsConnections.size(); i++){
+                        vitalSignsConnections.get(i).disconnect();
+                    }
+                }
+            } catch (Exception e){
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
+            return vitalSignsUrls;
+        }
+    }
+
+    // Notification Channel creation for notification box
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
