@@ -57,8 +57,14 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
 
         holder.name.setText(name);
         holder.roomNo.setText(roomNum);
-        holder.bpm.setText(bpm);
-        holder.spo2.setText(spo2);
+
+        if (resident.getFirstBpmList().equals("Nil")){
+            holder.bpm.setText(resident.getFirstBpmList());
+            holder.spo2.setText(resident.getFirstSpo2List());
+        } else {
+            holder.bpm.setText(bpm);
+            holder.spo2.setText(spo2);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

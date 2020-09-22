@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -48,7 +49,7 @@ public class ResidentGeneralFragment extends Fragment {
     private Resident resident;
 
     private LineChart volumeReportChart;
-    private TextView bpmText, spo2Text, updateDate;
+    private TextView bpmText, spo2Text, updateDate, graphTitle;
 
     public ResidentGeneralFragment() { }
 
@@ -76,25 +77,35 @@ public class ResidentGeneralFragment extends Fragment {
         bpmText = rootView.findViewById(R.id.bpm_text);
         spo2Text = rootView.findViewById(R.id.spo2_text);
         updateDate = rootView.findViewById(R.id.updateDate);
+        graphTitle = rootView.findViewById(R.id.general_graph_title);
 
         List<String> dates = resident.getUpdateDateList();
         List<String> residentSpo2List = resident.getSpo2List();
         List<Double> amounts = new ArrayList<>();
         List<String> residentBpmList = resident.getBpmList();
 
-        for (int i = 0; i < residentBpmList.size(); i++){
-            amounts.add(Double.parseDouble(residentBpmList.get(residentBpmList.size()-1-i)));
+        if (dates.get(0).equals("Nil")){
+            String bpm = "BPM: " + residentBpmList.get(0);
+            bpmText.setText(bpm);
+            String spo2 = "SpO2: " + residentSpo2List.get(0);
+            spo2Text.setText(spo2);
+            updateDate.setVisibility(View.INVISIBLE);
+        } else {
+            for (int i = 0; i < residentBpmList.size(); i++){
+                amounts.add(Double.parseDouble(residentBpmList.get(residentBpmList.size()-1-i)));
+            }
+
+            String bpm = "BPM: " + residentBpmList.get(0) + "bpm";
+            bpmText.setText(bpm);
+            String spo2 = "SpO2: " + residentSpo2List.get(0) + "%";
+            spo2Text.setText(spo2);
+            String[] dataArray = dates.get(0).replace("T", ",").replace(".000Z", "").split(",");
+            String updateText = "Last updated: " + dataArray[0] + " at " + dataArray[1];
+            updateDate.setText(updateText);
+
+            renderData(dates, amounts);
         }
 
-        String bpm = "BPM: " + residentBpmList.get(0) + "bpm";
-        bpmText.setText(bpm);
-        String spo2 = "SpO2: " + residentSpo2List.get(0) + "%";
-        spo2Text.setText(spo2);
-        String[] dataArray = dates.get(0).replace("T", ",").replace(".000Z", "").split(",");
-        String updateText = "Last updated: " + dataArray[0] + " at " + dataArray[1];
-        updateDate.setText(updateText);
-
-        renderData(dates, amounts);
         return rootView;
     }
 

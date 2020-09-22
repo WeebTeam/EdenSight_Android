@@ -34,13 +34,19 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        // Not actual data, will modify soon
         String date = dateList.get(position), time = timeList.get(position), bpm = bpmList.get(position), spo2 = spo2List.get(position);
+        if (bpm.equals("Nil")){
+            holder.date.setText(": Nil");
+            holder.time.setText(": Nil");
+            holder.bpm.setText(": Nil");
+            holder.spo2.setText(": Nil");
+        } else {
+            holder.date.setText(": " + date);
+            holder.time.setText(": " +time);
+            holder.bpm.setText(": " + bpm + "bpm");
+            holder.spo2.setText(": " + spo2 + "%");
+        }
 
-        holder.date.setText(": " + date);
-        holder.time.setText(": " +time);
-        holder.bpm.setText(": " + bpm + "bpm");
-        holder.spo2.setText(": " + spo2 + "%");
     }
 
     @Override

@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 
 public class ResidentDetailsActivity extends FragmentActivity {
@@ -36,6 +37,10 @@ public class ResidentDetailsActivity extends FragmentActivity {
         pagerAdapter = new ResidentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        if (selectedResident.getFirstBpmList().equals("Nil")){
+            Toast.makeText(this, "No vital signs data available as resident is not registered to a device.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

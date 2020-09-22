@@ -45,18 +45,31 @@ public class ResidentHistoryFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_resident_history, container, false);
         List<String> dateList = new ArrayList<>(), timeList = new ArrayList<>(), bpmList = resident.getBpmList(), spo2List = resident.getSpo2List(), rawDateList = resident.getUpdateDateList();
 
-        for (int i = 0; i < rawDateList.size(); i++){
-            String[] dataArray = rawDateList.get(i).replace("T", ",").replace(".000Z", "").split(",");
-            dateList.add(dataArray[0]);
-            timeList.add(dataArray[1]);
+        if (rawDateList.get(0).equals("Nil")){
+            dateList.add("Nil");
+            timeList.add("Nil");
+
+            historyRecyclerView = rootView.findViewById(R.id.history_recyclerView);
+            historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+            historyRecyclerView.addItemDecoration(dividerItemDecoration);
+            historyAdapter = new HistoryAdapter(getActivity(), dateList, timeList, bpmList, spo2List);
+            historyRecyclerView.setAdapter(historyAdapter);
+        } else {
+            for (int i = 0; i < rawDateList.size(); i++){
+                String[] dataArray = rawDateList.get(i).replace("T", ",").replace(".000Z", "").split(",");
+                dateList.add(dataArray[0]);
+                timeList.add(dataArray[1]);
+            }
+
+            historyRecyclerView = rootView.findViewById(R.id.history_recyclerView);
+            historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+            historyRecyclerView.addItemDecoration(dividerItemDecoration);
+            historyAdapter = new HistoryAdapter(getActivity(), dateList, timeList, bpmList, spo2List);
+            historyRecyclerView.setAdapter(historyAdapter);
         }
 
-        historyRecyclerView = rootView.findViewById(R.id.history_recyclerView);
-        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        historyRecyclerView.addItemDecoration(dividerItemDecoration);
-        historyAdapter = new HistoryAdapter(getActivity(), dateList, timeList, bpmList, spo2List);
-        historyRecyclerView.setAdapter(historyAdapter);
         return rootView;
     }
 }

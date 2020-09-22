@@ -36,6 +36,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean alarmIsRunning = false;
     final Handler alarmHandler = new Handler();
     String username, password;
+    List<String> deviceAddressList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,16 @@ public class MainActivity extends AppCompatActivity {
         searchFilter = findViewById(R.id.search_filter);
         mainProgressBar = findViewById(R.id.main_progressBar);
 
-        // Comment this if server is not on
+        // Retrieve mac address details before making resident list
+        RetrieveDeviceMacAddressTask firstTask = new RetrieveDeviceMacAddressTask();
+        try {
+            String test = firstTask.execute().get();
+        } catch (ExecutionException e) {
+            Log.e("ERROR", e.getMessage(), e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         new RetrieveMainActivityTask(this, recyclerView, searchFilter).execute();
 
         // Making sure that only 1 instance is running
@@ -156,7 +168,50 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public class RetrieveMainActivityTask extends AsyncTask<Void, Void, String[]>{
+    // Async Task to get available device mac addresses first & store in String list to be used on another Async Task
+    public class RetrieveDeviceMacAddressTask extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected void onPreExecute() { mainProgressBar.setVisibility(View.VISIBLE); }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
+            try {
+                URL url = new URL(urlText);
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                String encoded = java.util.Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+                urlConnection.setRequestProperty("Authorization", "Basic " + encoded);
+
+                try{
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String inline;
+                    while ((inline = bufferedReader.readLine()) != null){
+                        stringBuilder.append(inline).append("\n");
+                    }
+                    bufferedReader.close();
+
+                    JSONArray jsonRawData = new JSONArray(stringBuilder.toString());
+                    for (int i = 0; i < jsonRawData.length(); i++){
+                        JSONObject residentObject = jsonRawData.getJSONObject(i);
+                        String macAddress = residentObject.getString("deviceAddr");
+                        deviceAddressList.add(macAddress);
+                    }
+
+                    return null;
+                } finally {
+                    urlConnection.disconnect();
+                }
+            } catch (Exception e){
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
+        }
+    }
+
+    public class RetrieveMainActivityTask extends AsyncTask<Void, Void, List<String>>{
         Context c;
         RecyclerView rv;
         EditText filterText;
@@ -174,23 +229,38 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String[] doInBackground(Void... voids) {
+        protected List<String> doInBackground(Void... voids) {
             String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
-
             // Only 1 device for now
-            String vitalSignsUrl = "https://braserver.mooo.com/edensight/api/vitalsigns/00:a0:50:bd:75:55/6";
+            List<String> vitalSignsUrls = new ArrayList<>();
+            for (int i = 0; i < deviceAddressList.size(); i++){
+                if (deviceAddressList.get(i).equals("")){
+                    continue;
+                } else {
+                    String urlData = "https://braserver.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/6";
+                    vitalSignsUrls.add(urlData);
+                }
+            }
+            //String vitalSignsUrl = "https://braserver.mooo.com/edensight/api/vitalsigns/00:a0:50:bd:75:55/6";
+
             try {
                 URL url = new URL(urlText);
-                URL url2 = new URL(vitalSignsUrl);
                 HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-                HttpsURLConnection vitalSignsConnection = (HttpsURLConnection) url2.openConnection();
                 urlConnection.setRequestMethod("GET");
-                vitalSignsConnection.setRequestMethod("GET");
                 String encoded = java.util.Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
                 urlConnection.setRequestProperty("Authorization", "Basic " + encoded);
-                vitalSignsConnection.setRequestProperty("Authorization", "Basic " + encoded);
+
+                List<HttpsURLConnection> vitalSignsConnections = new ArrayList<>();
+                for (int i = 0; i < vitalSignsUrls.size(); i++){
+                    URL vitalSignsUrl = new URL(vitalSignsUrls.get(i));
+                    HttpsURLConnection vitalSignsUrlConnection = (HttpsURLConnection) vitalSignsUrl.openConnection();
+                    vitalSignsUrlConnection.setRequestMethod("GET");
+                    vitalSignsUrlConnection.setRequestProperty("Authorization", "Basic " + encoded);
+                    vitalSignsConnections.add(vitalSignsUrlConnection);
+                }
 
                 try {
+                    List<String> response = new ArrayList<>();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
                     String inline;
@@ -198,21 +268,24 @@ public class MainActivity extends AppCompatActivity {
                         stringBuilder.append(inline).append("\n");
                     }
                     bufferedReader.close();
+                    response.add(stringBuilder.toString());
 
-                    BufferedReader bufferedReader2 = new BufferedReader(new InputStreamReader(vitalSignsConnection.getInputStream()));
-                    StringBuilder stringBuilder2 = new StringBuilder();
-
-                    while ((inline = bufferedReader2.readLine()) != null){
-                        stringBuilder2.append(inline).append("\n");
+                    for (int i = 0; i < vitalSignsConnections.size(); i++){
+                        BufferedReader vitalSignsReader = new BufferedReader(new InputStreamReader(vitalSignsConnections.get(i).getInputStream()));
+                        StringBuilder vitalSignsBuilder = new StringBuilder();
+                        String inline2;
+                        while ((inline2 = vitalSignsReader.readLine()) != null){
+                            vitalSignsBuilder.append(inline2).append("\n");
+                        }
+                        vitalSignsReader.close();
+                        response.add(vitalSignsBuilder.toString());
                     }
-                    bufferedReader2.close();
-
-                    String[] output = {stringBuilder.toString(), stringBuilder2.toString()};
-
-                    return output;
+                    return response;
                 } finally {
                     urlConnection.disconnect();
-                    vitalSignsConnection.disconnect();
+                    for (int i = 0; i < vitalSignsConnections.size(); i++){
+                        vitalSignsConnections.get(i).disconnect();
+                    }
                 }
 
             } catch (Exception e){
@@ -221,20 +294,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        protected void onPostExecute(String[] response){
-            if (response == null){
+        protected void onPostExecute(List<String> response){
+            if (response.get(0) == null){
                 mainProgressBar.setVisibility(View.GONE);
                 searchFilter.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Please ensure that device has Internet connection.", Toast.LENGTH_SHORT).show();
             } else {
                 mainProgressBar.setVisibility(View.GONE);
-                String residentListText = response[0];
-                String vitalSignsText = response[1];
+                String residentListText = response.get(0);
 
                 try{
                     JSONArray jsonResidents = new JSONArray(residentListText);
-                    // For now like this, wait 2nd device up then change again
-                    JSONArray jsonVitalSignsArray = new JSONArray(vitalSignsText);
 
                     for (int i = 0; i < jsonResidents.length(); i++) {
                         JSONObject object = jsonResidents.getJSONObject(i);
@@ -260,16 +330,23 @@ public class MainActivity extends AppCompatActivity {
                         resident.setConditions(conditions);
                         resident.setAllergies(allergies);
                         resident.setMedication(medication);
-                        resident.setDeviceAddr("00:a0:50:bd:75:55");
+                        resident.setDeviceAddr(object.getString("deviceAddr"));
 
-                        for (int j = 0; j < jsonVitalSignsArray.length(); j++){
-                            JSONObject jsonVitalSigns = jsonVitalSignsArray.getJSONObject(j);
-                            String bpm = jsonVitalSigns.getString("heartRate");
-                            String spo2 = jsonVitalSigns.getString("spO2");
-                            String updateDate = jsonVitalSigns.getString("dateTime");
-                            resident.addBpmList(bpm);
-                            resident.addSpo2List(spo2);
-                            resident.addUpdateDateList(updateDate);
+                        if ((i + 1) >= response.size()){
+                            resident.addBpmList("Nil");
+                            resident.addSpo2List("Nil");
+                            resident.addUpdateDateList("Nil");
+                        } else {
+                            JSONArray jsonVitalSignsArray = new JSONArray(response.get(i+1));
+                            for (int j = 0; j < jsonVitalSignsArray.length(); j++){
+                                JSONObject jsonVitalSigns = jsonVitalSignsArray.getJSONObject(j);
+                                String bpm = jsonVitalSigns.getString("heartRate");
+                                String spo2 = jsonVitalSigns.getString("spO2");
+                                String updateDate = jsonVitalSigns.getString("dateTime");
+                                resident.addBpmList(bpm);
+                                resident.addSpo2List(spo2);
+                                resident.addUpdateDateList(updateDate);
+                            }
                         }
                         residents.add(resident);
                     }
