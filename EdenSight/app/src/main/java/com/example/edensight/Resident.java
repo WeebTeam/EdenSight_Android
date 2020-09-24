@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Resident implements Parcelable {
-    private String name, dob, allocationDate, roomNumber, status, caretaker, gender, ic, nationality, bloodType, telNum, emergencyTel, guardian, address, deviceAddr;
+    private String name, dob, allocationDate, roomNumber, status, caretaker, gender, ic, nationality, bloodType, telNum, emergencyTel, guardian, deviceAddr, streetAddr1, streetAddr2, postal, city, state;
     private int id;
     private double weight, height;
     private String[] conditions, allergies, medication;
@@ -15,7 +15,7 @@ public class Resident implements Parcelable {
 
     public Resident() { }
 
-    public Resident(String name, String dob, String allocationDate, String roomNumber, String status, String caretaker, String gender, String ic, String nationality, String bloodType, String telNum, String emergencyTel, String guardian, String address, int id, double weight, double height) {
+    public Resident(String name, String dob, String allocationDate, String roomNumber, String status, String caretaker, String gender, String ic, String nationality, String bloodType, String telNum, String emergencyTel, String guardian, int id, double weight, double height) {
         this.name = name;
         this.dob = dob;
         this.allocationDate = allocationDate;
@@ -29,7 +29,6 @@ public class Resident implements Parcelable {
         this.telNum = telNum;
         this.emergencyTel = emergencyTel;
         this.guardian = guardian;
-        this.address = address;
         this.id = id;
         this.weight = weight;
         this.height = height;
@@ -49,7 +48,11 @@ public class Resident implements Parcelable {
         telNum = in.readString();
         emergencyTel = in.readString();
         guardian = in.readString();
-        address = in.readString();
+        streetAddr1 = in.readString();
+        streetAddr2 = in.readString();
+        postal = in.readString();
+        city = in.readString();
+        state = in.readString();
         id = in.readInt();
         weight = in.readDouble();
         height = in.readDouble();
@@ -76,11 +79,7 @@ public class Resident implements Parcelable {
 
     public String getName() { return name; }
 
-    public void setName(String name) { this.name = name; }
-
     public String getDob() { return dob; }
-
-    public void setDob(String dob) { this.dob = dob; }
 
     public String getAllocationDate() { return allocationDate; }
 
@@ -96,39 +95,41 @@ public class Resident implements Parcelable {
 
     public String getCaretaker() { return caretaker; }
 
-    public void setCaretaker(String caretaker) { this.caretaker = caretaker; }
-
     public String getGender() { return gender; }
-
-    public void setGender(String gender) { this.gender = gender; }
 
     public String getIc() { return ic; }
 
-    public void setIc(String ic) { this.ic = ic; }
-
     public String getNationality() { return nationality; }
-
-    public void setNationality(String nationality) { this.nationality = nationality; }
 
     public String getBloodType() { return bloodType; }
 
-    public void setBloodType(String bloodType) { this.bloodType = bloodType; }
-
     public String getTelNum() { return telNum; }
-
-    public void setTelNum(String telNum) { this.telNum = telNum; }
 
     public String getEmergencyTel() { return emergencyTel; }
 
-    public void setEmergencyTel(String emergencyTel) { this.emergencyTel = emergencyTel; }
-
     public String getGuardian() { return guardian; }
 
-    public void setGuardian(String guardian) { this.guardian = guardian; }
+    public void setName(String name) { this.name = name; }
 
-    public String getAddress() { return address; }
+    public String getStreetAddr1() { return streetAddr1; }
 
-    public void setAddress(String address) { this.address = address; }
+    public void setStreetAddr1(String streetAddr1) { this.streetAddr1 = streetAddr1; }
+
+    public String getStreetAddr2() { return streetAddr2; }
+
+    public void setStreetAddr2(String streetAddr2) { this.streetAddr2 = streetAddr2; }
+
+    public String getPostal() { return postal; }
+
+    public void setPostal(String postal) { this.postal = postal; }
+
+    public String getCity() { return city; }
+
+    public void setCity(String city) { this.city = city; }
+
+    public String getState() { return state; }
+
+    public void setState(String state) { this.state = state; }
 
     public int getResidentId() { return id; }
 
@@ -194,7 +195,11 @@ public class Resident implements Parcelable {
         dest.writeString(telNum);
         dest.writeString(emergencyTel);
         dest.writeString(guardian);
-        dest.writeString(address);
+        dest.writeString(streetAddr1);
+        dest.writeString(streetAddr2);
+        dest.writeString(postal);
+        dest.writeString(city);
+        dest.writeString(state);
         dest.writeInt(id);
         dest.writeDouble(weight);
         dest.writeDouble(height);

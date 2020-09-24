@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ public class ResidentDetailedFragment extends Fragment {
 
     private static final String DET_RESIDENT = "Det_Resident";
     private Resident resident;
-    TextView name, caretaker, roomNo, gender, dob, ic, nation, phoneNo, guardian, emergency, address;
+    TextView name, caretaker, roomNo, gender, dob, ic, nation, phoneNo, guardian, emergency, streetAddr1, streetAddr2, postal, city, state;
 
     public ResidentDetailedFragment() { }
 
@@ -47,9 +48,12 @@ public class ResidentDetailedFragment extends Fragment {
         phoneNo = rootView.findViewById(R.id.resident_detailed_phone_number);
         guardian = rootView.findViewById(R.id.resident_detailed_guardian);
         emergency = rootView.findViewById(R.id.resident_detailed_emergency);
-        address = rootView.findViewById(R.id.resident_detailed_address);
+        streetAddr1 = rootView.findViewById(R.id.resident_detailed_streetAddr1);
+        streetAddr2 = rootView.findViewById(R.id.resident_detailed_streetAddr2);
+        postal = rootView.findViewById(R.id.resident_detailed_postal);
+        city = rootView.findViewById(R.id.resident_detailed_city);
+        state = rootView.findViewById(R.id.resident_detailed_state);
 
-        // More will be added once database has all values
         name.setText(": " + resident.getName());
         caretaker.setText(": " + resident.getCaretaker());
         roomNo.setText(": " + resident.getRoomNumber());
@@ -60,8 +64,14 @@ public class ResidentDetailedFragment extends Fragment {
         phoneNo.setText(": " + resident.getTelNum());
         guardian.setText(": " + resident.getGuardian());
         emergency.setText(": " + resident.getEmergencyTel());
-        address.setText(": " + resident.getAddress());
+        streetAddr1.setText(": " + resident.getStreetAddr1());
+        streetAddr2.setText(": " + resident.getStreetAddr2());
+        postal.setText(": " + resident.getPostal());
+        city.setText(": " + resident.getCity());
+        state.setText(": " + resident.getState());
 
+        streetAddr1.setMovementMethod(new ScrollingMovementMethod());
+        streetAddr2.setMovementMethod(new ScrollingMovementMethod());
         return rootView;
     }
 }

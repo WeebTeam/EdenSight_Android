@@ -31,7 +31,11 @@
     <string name="resident_phoneNo">Resident\'s Tel.</string>
     <string name="resident_guardian">Guardian\'s Name</string>
     <string name="resident_emergency">Emergency Tel.</string>
-    <string name="resident_address">Address</string>
+    <string name="resident_streetAddr1">Street Address 1</string>
+    <string name="resident_streetAddr2">Street Address 2</string>
+    <string name="resident_postal">Postal</string>
+    <string name="resident_city">City</string>
+    <string name="resident_state">State</string>
 
     // Used in Details (Health) Fragment
     <string name="health_weight">Weight (kg)</string>

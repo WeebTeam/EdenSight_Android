@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Ensures that all resident names are updated into the resient names list to be used in the alarm
+        // Ensures that all resident names are updated into the resident names list to be used in the alarm
         RetrieveMainActivityTask secondTask = new RetrieveMainActivityTask(this, recyclerView, searchFilter);
         try {
             List<String> test = secondTask.execute().get();
@@ -302,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonResidents.length(); i++) {
                         JSONObject object = jsonResidents.getJSONObject(i);
-                        String address = object.get("streetAdd").toString() + ", " + object.get("streetAdd2").toString() + ", " + object.get("postal").toString() + ", " + object.get("city").toString() + ", " + object.get("state").toString();
 
                         String conditionsLiteral = object.get("healthConditions").toString().replace("[", "").replace("]", "");
                         String[] conditions = conditionsLiteral.split(",");
@@ -320,7 +319,12 @@ public class MainActivity extends AppCompatActivity {
                             medication[0] = "- (No Known Medications)";
                         }
 
-                        Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("enrollDate").toString(), object.get("room").toString(), object.get("status").toString(), object.get("status").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), address, object.getInt("_id"), object.getDouble("weight"), object.getDouble("height"));
+                        Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("enrollDate").toString(), object.get("room").toString(), object.get("status").toString(), object.get("status").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getInt("_id"), object.getDouble("weight"), object.getDouble("height"));
+                        resident.setStreetAddr1(object.getString("streetAdd"));
+                        resident.setStreetAddr2(object.getString("streetAdd2"));
+                        resident.setPostal(object.getString("postal"));
+                        resident.setCity(object.getString("city"));
+                        resident.setState(object.getString("state"));
                         resident.setConditions(conditions);
                         resident.setAllergies(allergies);
                         resident.setMedication(medication);
