@@ -1,8 +1,5 @@
 language: android
-addons:
-    apt:
-        packages:
-            ant
+jdk: oraclejdk8
 dist: trusty
 android:
     components:
