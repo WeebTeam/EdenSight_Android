@@ -1,4 +1,8 @@
 language: android
+addons:
+    apt:
+        packages:
+            ant
 dist: trusty
 android:
     components:
