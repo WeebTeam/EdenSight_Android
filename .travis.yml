@@ -21,4 +21,5 @@ android:
         - 'android-sdk-license-.+'
         - 'google-gdk-license-.+'
 script:
+    - chmod +x ./gradlew
     - ./gradlew build
