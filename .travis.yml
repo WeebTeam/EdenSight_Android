@@ -21,5 +21,6 @@ android:
         - 'android-sdk-license-.+'
         - 'google-gdk-license-.+'
 script:
+    - cd EdenSight/app/
     - chmod +x ./gradlew
     - ./gradlew build
