@@ -25,4 +25,4 @@ before_install:
 script:
     - cd EdenSight/app/
     - chmod +x ./gradlew
-    - ./gradlew assembleDebug
+    - ./gradlew build
