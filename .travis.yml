@@ -12,16 +12,19 @@ android:
         - 'google-gdk-license-.+'
     components:
         - tools
+        - tools
         - platform-tools
-        - build-tools-$ANDROID_BUILD_TOOLS
-        - android-$ANDROID_API_LEVEL
         - extra-google-google_play_services
         - extra-google-m2repository
         - extra-android-m2repository
-        - addon-google_apis-google-$ANDROID_API_LEVEL
+        - build-tools-26.0.2
+        - android-26
+        - sys-img-armeabi-v7a-android-26
+before_install:
+    - yes | sdkmanager "platforms;android-27"
+    - yes | sdkmanager "platforms;android-28"
 before_script:
-    # Prepare pre-accepted licenses to not be promted at installation
-    - mkdir -p "$ANDROID_HOME/licenses"
-    - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
-script:
-    - ./gradlew build check
+    - echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a
+    - emulator -avd test -no-audio -no-window &
+    - android-wait-for-emulator
+    - adb shell input keyevent 82 &
