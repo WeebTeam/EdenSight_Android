@@ -1,5 +1,5 @@
 language: android
-sudo: required
+sudo: false
 jdk: oraclejdk8
 dist: trusty
 env:
@@ -35,4 +35,4 @@ before_script:
     - cd EdenSight/app/
     - chmod +x gradlew
 script:
-    - ./gradlew build check
+    - ./gradlew clean test build
