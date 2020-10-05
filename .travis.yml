@@ -31,9 +31,8 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 before_script:
-    - cd EdenSight/gradle/wrapper/
-    - dir
-    - chmod +x gradle-wrapper.jar
+    - cd EdenSight/app/
+    - chmod +x gradlew
 script:
     - ./gradlew clean build
     - ./gradlew test
