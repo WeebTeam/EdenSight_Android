@@ -12,28 +12,13 @@ android:
         - tools
         - platform-tools
         - tools
+        - build-tools-$ANDROID_BUILD_TOOLS
+        - android-$ANDROID_API_LEVEL
         - extra-android-m2repository
         - sys-img-armeabi-v7a-android-22
     licenses:
         - 'android-sdk-preview-license-52d11cd2'
         - 'android-sdk-license-.+'
         - 'google-gdk-license-.+'
-before_install:
-    - touch $HOME/.android/repositories.cfg
-    - yes | sdkmanager "platforms;android-26"
-    - yes | sdkmanager "build-tools;26.0.2"
-
-before_cache:
-    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-    - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-    directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-before_script:
-    - cd EdenSight/app/
-    - chmod +x gradlew
 script:
-    - ./gradlew clean test build
-    - ./gradlew connectedCheck
+    - ./gradlew build
