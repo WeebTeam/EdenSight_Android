@@ -18,6 +18,9 @@ android:
         - 'android-sdk-license-.+'
         - 'google-gdk-license-.+'
 before_install:
+    - pwd
+    - ls -la
+    - chmod +x /.gradlew
     - touch $HOME/.android/repositories.cfg
     - yes | sdkmanager "platforms;android-28"
     - yes | sdkmanager "build-tools;28.0.3"
