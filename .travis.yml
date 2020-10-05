@@ -34,5 +34,4 @@ before_script:
     - cd EdenSight/app/
     - chmod +x gradlew
 script:
-    - ./gradlew clean build
-    - ./gradlew test
+    - ./gradlew build connectedCheck
