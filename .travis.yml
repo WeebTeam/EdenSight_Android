@@ -20,7 +20,9 @@ android:
         - 'android-sdk-preview-license-52d11cd2'
         - 'android-sdk-license-.+'
         - 'google-gdk-license-.+'
+before_install:
+    - yes | sdkmanager "platforms;android-26"
 script:
     - cd EdenSight/app/
     - chmod +x ./gradlew
-    - ./gradlew
+    - ./gradlew assembleDebug
