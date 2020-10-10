@@ -116,8 +116,6 @@ public class ResidentGeneralFragment extends Fragment {
 
     public void renderData(List<String> dates, List<Double> allAmounts) {
 
-        final ArrayList<String> xAxisLabel = new ArrayList<>();
-
         XAxis xAxis = volumeReportChart.getXAxis();
         XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
         xAxis.setPosition(position);

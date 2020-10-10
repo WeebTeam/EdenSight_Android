@@ -7,20 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Resident implements Parcelable {
-    private String name, dob, allocationDate, roomNumber, status, caretaker, gender, ic, nationality, bloodType, telNum, emergencyTel, guardian, deviceAddr, streetAddr1, streetAddr2, postal, city, state;
-    private int id;
+    private String name, dob, roomNumber, caretaker, gender, ic, nationality, bloodType, telNum, emergencyTel, guardian, deviceAddr, streetAddr1, streetAddr2, postal, city, state;
     private double weight, height;
     private String[] conditions, allergies, medication;
     private List<String> bpm = new ArrayList<String>(), spo2 = new ArrayList<String>(), updateDate = new ArrayList<String>();
 
     public Resident() { }
 
-    public Resident(String name, String dob, String allocationDate, String roomNumber, String status, String caretaker, String gender, String ic, String nationality, String bloodType, String telNum, String emergencyTel, String guardian, int id, double weight, double height) {
+    public Resident(String name, String dob, String roomNumber, String caretaker, String gender, String ic, String nationality, String bloodType, String telNum, String emergencyTel, String guardian, double weight, double height) {
         this.name = name;
         this.dob = dob;
-        this.allocationDate = allocationDate;
         this.roomNumber = roomNumber;
-        this.status = status;
         this.caretaker = caretaker;
         this.gender = gender;
         this.ic = ic;
@@ -29,7 +26,6 @@ public class Resident implements Parcelable {
         this.telNum = telNum;
         this.emergencyTel = emergencyTel;
         this.guardian = guardian;
-        this.id = id;
         this.weight = weight;
         this.height = height;
     }
@@ -37,9 +33,7 @@ public class Resident implements Parcelable {
     protected Resident(Parcel in) {
         name = in.readString();
         dob = in.readString();
-        allocationDate = in.readString();
         roomNumber = in.readString();
-        status = in.readString();
         caretaker = in.readString();
         gender = in.readString();
         ic = in.readString();
@@ -53,7 +47,6 @@ public class Resident implements Parcelable {
         postal = in.readString();
         city = in.readString();
         state = in.readString();
-        id = in.readInt();
         weight = in.readDouble();
         height = in.readDouble();
         conditions = in.createStringArray();
@@ -81,17 +74,7 @@ public class Resident implements Parcelable {
 
     public String getDob() { return dob; }
 
-    public String getAllocationDate() { return allocationDate; }
-
-    public void setAllocationDate(String allocationDate) { this.allocationDate = allocationDate; }
-
     public String getRoomNumber() { return roomNumber; }
-
-    public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
-
-    public String getStatus() { return status; }
-
-    public void setStatus(String status) { this.status = status; }
 
     public String getCaretaker() { return caretaker; }
 
@@ -131,17 +114,9 @@ public class Resident implements Parcelable {
 
     public void setState(String state) { this.state = state; }
 
-    public int getResidentId() { return id; }
-
-    public void setResidentId(int id) { this.id = id; }
-
     public double getWeight() { return weight; }
 
-    public void setWeight(float weight) { this.weight = weight; }
-
     public double getHeight() { return height; }
-
-    public void setHeight(float height) { this.height = height; }
 
     public String[] getConditions() { return conditions; }
 
@@ -154,8 +129,6 @@ public class Resident implements Parcelable {
     public String[] getMedication() { return medication; }
 
     public void setMedication(String[] medication) { this.medication = medication; }
-
-    public String getDeviceAddr() { return deviceAddr; }
 
     public void setDeviceAddr(String deviceAddr) { this.deviceAddr = deviceAddr; }
 
@@ -184,9 +157,7 @@ public class Resident implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(dob);
-        dest.writeString(allocationDate);
         dest.writeString(roomNumber);
-        dest.writeString(status);
         dest.writeString(caretaker);
         dest.writeString(gender);
         dest.writeString(ic);
@@ -200,7 +171,6 @@ public class Resident implements Parcelable {
         dest.writeString(postal);
         dest.writeString(city);
         dest.writeString(state);
-        dest.writeInt(id);
         dest.writeDouble(weight);
         dest.writeDouble(height);
         dest.writeStringArray(conditions);

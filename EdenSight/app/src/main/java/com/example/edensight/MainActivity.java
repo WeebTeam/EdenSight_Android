@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
                             medication[0] = "- (No Known Medications)";
                         }
 
-                        Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("enrollDate").toString(), object.get("room").toString(), object.get("status").toString(), object.get("status").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getInt("_id"), object.getDouble("weight"), object.getDouble("height"));
+                        Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("room").toString(), object.get("caretaker").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getDouble("weight"), object.getDouble("height"));
                         resident.setStreetAddr1(object.getString("streetAdd"));
                         resident.setStreetAddr2(object.getString("streetAdd2"));
                         resident.setPostal(object.getString("postal"));
@@ -428,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "aye")
                                     .setSmallIcon(R.drawable.eden_logo)
                                     .setContentTitle("Alert From EdenSight!")
-                                    .setContentText("Resident " + name + "is having trouble. Please send help!")
+                                    .setContentText("Resident " + name + " is having trouble. Please send help!")
                                     .setAutoCancel(true)
                                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
                             Intent notificationIntent = new Intent(getApplicationContext(), ResidentDetailsActivity.class);
