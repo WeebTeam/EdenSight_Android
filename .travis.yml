@@ -25,4 +25,6 @@ before_install:
 script:
     - cd EdenSight/app/
     - chmod +x ./gradlew
-    - ./gradlew build test
+    - ./gradlew clean
+    - ./gradlew assembleDebug
+    - ./gradlew assembleDebugAndroidTest
