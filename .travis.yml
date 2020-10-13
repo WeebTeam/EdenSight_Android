@@ -26,6 +26,5 @@ script:
     - cd EdenSight/app/
     - chmod +x ./gradlew
     - ./gradlew clean
-    - ./gradlew assembleDebug
-    - ./gradlew assembleDebugAndroidTest
+    - ./gradlew build
     - ./gradlew test
