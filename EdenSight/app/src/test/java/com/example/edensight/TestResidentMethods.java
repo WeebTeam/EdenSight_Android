@@ -15,7 +15,7 @@ public class TestResidentMethods {
 
     @Test
     public void getName() {
-        assertEquals("Jeff", testResident.getName());
+        assertEquals("jeff", testResident.getName());
     }
 
     @Test
