@@ -30,7 +30,7 @@ public class TestResidentParcelable {
         Resident createdFromParcel = Resident.CREATOR.createFromParcel(parcel);
 
         // Verifying received data
-        assertEquals("Jeff", createdFromParcel.getName());
+        assertEquals("jeff", createdFromParcel.getName());
         assertEquals("1/6/1990", createdFromParcel.getDob());
         assertEquals("A705", createdFromParcel.getRoomNumber());
         assertEquals("Emily", createdFromParcel.getCaretaker());
