@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
                 if (deviceAddressList.get(i).equals("")){
                     continue;
                 } else {
-                    String urlData = "https://braserver.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/6";
+                    String urlData = "https://braserver.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/1";
                     vitalSignsUrls.add(urlData);
                 }
             }
@@ -406,7 +406,6 @@ public class MainActivity extends AppCompatActivity {
                     vitalSignsConnections.add(vitalSignsUrlConnection);
                 }
                 try {
-                    List<String> response = new ArrayList<>();
                     for (int i = 0; i < vitalSignsConnections.size(); i++){
                         BufferedReader vitalSignsReader = new BufferedReader(new InputStreamReader(vitalSignsConnections.get(i).getInputStream()));
                         StringBuilder vitalSignsBuilder = new StringBuilder();
@@ -415,7 +414,6 @@ public class MainActivity extends AppCompatActivity {
                             vitalSignsBuilder.append(inline2).append("\n");
                         }
                         vitalSignsReader.close();
-                        response.add(vitalSignsBuilder.toString());
                         JSONArray jsonVitalSignsArray = new JSONArray(vitalSignsBuilder.toString());
                         JSONObject vitalSignsObject = jsonVitalSignsArray.getJSONObject(0);
                         double bpm = vitalSignsObject.getDouble("heartRate");
@@ -441,10 +439,8 @@ public class MainActivity extends AppCompatActivity {
                             builder.setContentIntent(pendingIntent);
 
                             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                            manager.notify(0, builder.build());
+                            manager.notify(i, builder.build());
                         }
-
-                        return response;
                     }
 
                 } finally {
