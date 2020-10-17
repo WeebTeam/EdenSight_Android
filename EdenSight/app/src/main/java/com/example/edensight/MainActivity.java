@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         mainProgressBar = findViewById(R.id.main_progressBar);
 
         // Retrieve mac address details before making resident list
-        RetrieveDeviceMacAddressTask firstTask = new RetrieveDeviceMacAddressTask();
+        PreretrieveDataTask firstTask = new PreretrieveDataTask();
         try {
             String test = firstTask.execute().get();
         } catch (ExecutionException e) {
@@ -163,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // Async Task to get available device mac addresses first & store in String list to be used on another Async Task
-    public class RetrieveDeviceMacAddressTask extends AsyncTask<Void, Void, String>{
+    // Async Task that retrieves all required data before creating the resident list (Need to get device address + cross ref user to their name to sort residents by caretaker)
+    public class PreretrieveDataTask extends AsyncTask<Void, Void, String>{
 
         @Override
         protected void onPreExecute() { mainProgressBar.setVisibility(View.VISIBLE); }
