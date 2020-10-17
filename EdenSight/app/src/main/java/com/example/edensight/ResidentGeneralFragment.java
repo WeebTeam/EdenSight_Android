@@ -154,7 +154,7 @@ public class ResidentGeneralFragment extends Fragment {
         YAxis leftAxis = volumeReportChart.getAxisLeft();
         leftAxis.removeAllLimitLines();
 
-        leftAxis.setAxisMaximum(100f);
+        leftAxis.setAxisMaximum(160f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
