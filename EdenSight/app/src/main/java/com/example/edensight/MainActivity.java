@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar mainProgressBar;
     static boolean alarmIsRunning = false;
     final Handler alarmHandler = new Handler();
-    String username, password;
+    String username, password, caretakerName;
+    int caretakerId;
     ArrayList<Resident> residents = new ArrayList<>();
     List<String> deviceAddressList = new ArrayList<>();
 
@@ -172,11 +173,39 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
+            String staffUrlText = "https://braserver.mooo.com/edensight/api/users/all/";
             try {
+                // Retrieve current user's name based on username
+                URL staffUrl = new URL(staffUrlText);
+                HttpsURLConnection staffUrlConnection = (HttpsURLConnection) staffUrl.openConnection();
+                staffUrlConnection.setRequestMethod("GET");
+                String encoded = java.util.Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+                staffUrlConnection.setRequestProperty("Authorization", "Basic " + encoded);
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(staffUrlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String inline;
+                    while ((inline = bufferedReader.readLine()) != null){
+                        stringBuilder.append(inline).append("\n");
+                    }
+                    bufferedReader.close();
+
+                    JSONArray jsonStaffData = new JSONArray(stringBuilder.toString());
+                    for (int i = 0; i < jsonStaffData.length(); i++){
+                        JSONObject staffObject = jsonStaffData.getJSONObject(i);
+                        if (username.equals(staffObject.getString("uname"))){
+                            caretakerName = staffObject.getString("name");
+                            caretakerId = staffObject.getInt("_id");
+                        }
+                    }
+                } finally {
+                    staffUrlConnection.disconnect();
+                }
+
+                // Retrieve device mac address data
                 URL url = new URL(urlText);
                 HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
-                String encoded = java.util.Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
                 urlConnection.setRequestProperty("Authorization", "Basic " + encoded);
 
                 try{
@@ -191,14 +220,16 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray jsonRawData = new JSONArray(stringBuilder.toString());
                     for (int i = 0; i < jsonRawData.length(); i++){
                         JSONObject residentObject = jsonRawData.getJSONObject(i);
-                        String macAddress = residentObject.getString("deviceAddr");
-                        deviceAddressList.add(macAddress);
+                        if (residentObject.getInt("caretaker") == caretakerId){
+                            String macAddress = residentObject.getString("deviceAddr");
+                            deviceAddressList.add(macAddress);
+                        }
                     }
-
-                    return null;
                 } finally {
                     urlConnection.disconnect();
                 }
+
+                return null;
             } catch (Exception e){
                 Log.e("ERROR", e.getMessage(), e);
                 return null;
@@ -302,54 +333,60 @@ public class MainActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonResidents.length(); i++) {
                         JSONObject object = jsonResidents.getJSONObject(i);
-
-                        String conditionsLiteral = object.get("healthConditions").toString().replace("[", "").replace("]", "");
-                        String[] conditions = conditionsLiteral.split(",");
-                        if (conditions[0].equals("")){
-                            conditions[0] = "- (No Known Health Conditions)";
-                        }
-                        String allergiesLiteral = object.get("allergies").toString().replace("[", "").replace("]", "");
-                        String[] allergies = allergiesLiteral.split(",");
-                        if (allergies[0].equals("")){
-                            allergies[0] = "- (No Known Allergies)";
-                        }
-                        String medicationLiteral = object.get("medication").toString().replace("[", "").replace("]", "");
-                        String[] medication = medicationLiteral.split(",");
-                        if (medication[0].equals("")){
-                            medication[0] = "- (No Known Medications)";
-                        }
-
-                        Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("room").toString(), object.get("caretaker").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getDouble("weight"), object.getDouble("height"));
-                        resident.setStreetAddr1(object.getString("streetAdd"));
-                        resident.setStreetAddr2(object.getString("streetAdd2"));
-                        resident.setPostal(object.getString("postal"));
-                        resident.setCity(object.getString("city"));
-                        resident.setState(object.getString("state"));
-                        resident.setConditions(conditions);
-                        resident.setAllergies(allergies);
-                        resident.setMedication(medication);
-                        resident.setDeviceAddr(object.getString("deviceAddr"));
-
-                        if ((i + 1) >= response.size()){
-                            resident.addBpmList("Nil");
-                            resident.addSpo2List("Nil");
-                            resident.addUpdateDateList("Nil");
-                        } else {
-                            JSONArray jsonVitalSignsArray = new JSONArray(response.get(i+1));
-                            for (int j = 0; j < jsonVitalSignsArray.length(); j++){
-                                JSONObject jsonVitalSigns = jsonVitalSignsArray.getJSONObject(j);
-                                String bpm = jsonVitalSigns.getString("heartRate");
-                                String spo2 = jsonVitalSigns.getString("spO2");
-                                String updateDate = jsonVitalSigns.getString("dateTime");
-                                resident.addBpmList(bpm);
-                                resident.addSpo2List(spo2);
-                                resident.addUpdateDateList(updateDate);
+                        // Display residents assigned to caretaker only
+                        if (object.getInt("caretaker") == caretakerId){
+                            String conditionsLiteral = object.get("healthConditions").toString().replace("[", "").replace("]", "");
+                            String[] conditions = conditionsLiteral.split(",");
+                            if (conditions[0].equals("")){
+                                conditions[0] = "- (No Known Health Conditions)";
                             }
+                            String allergiesLiteral = object.get("allergies").toString().replace("[", "").replace("]", "");
+                            String[] allergies = allergiesLiteral.split(",");
+                            if (allergies[0].equals("")){
+                                allergies[0] = "- (No Known Allergies)";
+                            }
+                            String medicationLiteral = object.get("medication").toString().replace("[", "").replace("]", "");
+                            String[] medication = medicationLiteral.split(",");
+                            if (medication[0].equals("")){
+                                medication[0] = "- (No Known Medications)";
+                            }
+
+                            Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("room").toString(), object.get("caretaker").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getDouble("weight"), object.getDouble("height"));
+                            resident.setStreetAddr1(object.getString("streetAdd"));
+                            resident.setStreetAddr2(object.getString("streetAdd2"));
+                            resident.setPostal(object.getString("postal"));
+                            resident.setCity(object.getString("city"));
+                            resident.setState(object.getString("state"));
+                            resident.setConditions(conditions);
+                            resident.setAllergies(allergies);
+                            resident.setMedication(medication);
+                            resident.setDeviceAddr(object.getString("deviceAddr"));
+
+                            if ((i + 1) >= response.size()){
+                                resident.addBpmList("Nil");
+                                resident.addSpo2List("Nil");
+                                resident.addUpdateDateList("Nil");
+                            } else {
+                                JSONArray jsonVitalSignsArray = new JSONArray(response.get(i+1));
+                                for (int j = 0; j < jsonVitalSignsArray.length(); j++){
+                                    JSONObject jsonVitalSigns = jsonVitalSignsArray.getJSONObject(j);
+                                    String bpm = jsonVitalSigns.getString("heartRate");
+                                    String spo2 = jsonVitalSigns.getString("spO2");
+                                    String updateDate = jsonVitalSigns.getString("dateTime");
+                                    resident.addBpmList(bpm);
+                                    resident.addSpo2List(spo2);
+                                    resident.addUpdateDateList(updateDate);
+                                }
+                            }
+                            residents.add(resident);
                         }
-                        residents.add(resident);
+
                     }
 
                     residentAdapter = new ResidentAdapter(residents, getApplicationContext(), username, password);
+                    if (residentAdapter.getItemCount() == 0){
+                        Toast.makeText(getApplicationContext(), "You appear to not have any residents under your care.", Toast.LENGTH_SHORT).show();
+                    }
                     rv.setAdapter(residentAdapter);
                     searchFilter.addTextChangedListener(new TextWatcher() {
                         @Override

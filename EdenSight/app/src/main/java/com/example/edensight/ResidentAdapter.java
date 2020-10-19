@@ -48,6 +48,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.Reside
 
     @Override
     public void onBindViewHolder(@NonNull ResidentViewHolder holder, final int position) {
+
         final Resident resident = residentList.get(position);
 
         String name = resident.getName();
