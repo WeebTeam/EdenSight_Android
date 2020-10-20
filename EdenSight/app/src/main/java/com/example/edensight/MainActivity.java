@@ -220,7 +220,8 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray jsonRawData = new JSONArray(stringBuilder.toString());
                     for (int i = 0; i < jsonRawData.length(); i++){
                         JSONObject residentObject = jsonRawData.getJSONObject(i);
-                        if (residentObject.getInt("caretaker") == caretakerId){
+                        JSONObject caretakerObj = residentObject.getJSONObject("caretaker");
+                        if (caretakerObj.getInt("_id") == caretakerId){
                             String macAddress = residentObject.getString("deviceAddr");
                             deviceAddressList.add(macAddress);
                         }
@@ -334,7 +335,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonResidents.length(); i++) {
                         JSONObject object = jsonResidents.getJSONObject(i);
                         // Display residents assigned to caretaker only
-                        if (object.getInt("caretaker") == caretakerId){
+                        JSONObject caretakerObj = object.getJSONObject("caretaker");
+                        if (caretakerObj.getInt("_id") == caretakerId){
                             String conditionsLiteral = object.get("healthConditions").toString().replace("[", "").replace("]", "");
                             String[] conditions = conditionsLiteral.split(",");
                             if (conditions[0].equals("")){
@@ -351,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
                                 medication[0] = "- (No Known Medications)";
                             }
 
-                            Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("room").toString(), object.get("caretaker").toString(), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getDouble("weight"), object.getDouble("height"));
+                            Resident resident = new Resident(object.get("name").toString(), object.get("dob").toString(), object.get("room").toString(), caretakerObj.getString("name"), object.get("gender").toString(), object.get("ic").toString(), object.get("nationality").toString(), object.get("bloodType").toString(), object.get("pNum").toString(), object.get("emergencyPNum").toString(), object.get("guardian").toString(), object.getDouble("weight"), object.getDouble("height"));
                             resident.setStreetAddr1(object.getString("streetAdd"));
                             resident.setStreetAddr2(object.getString("streetAdd2"));
                             resident.setPostal(object.getString("postal"));
