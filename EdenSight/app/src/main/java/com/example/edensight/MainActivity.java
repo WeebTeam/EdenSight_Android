@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
                         Resident resident = residents.get(i);
                         String name = resident.getName();
 
-                        // Check if resident is in an emergency situation (bpm < 41.0 || bpm > 139.0) || spo2 < 95.0
+                        // Check if resident is in an emergency situation (bpm < 41.0 || bpm > 139.0) || spo2 < 90.0
                         if ((bpm < 41.0 || bpm > 139.0) || spo2 < 90.0){
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "aye")
                                     .setSmallIcon(R.drawable.eden_logo)
