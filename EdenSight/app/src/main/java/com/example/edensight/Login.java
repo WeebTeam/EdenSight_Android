@@ -107,9 +107,8 @@ public class Login extends AppCompatActivity {
 
         protected void onPostExecute(String response){
             progressBar.setVisibility(View.GONE);
-            if (response == null){
-                Toast.makeText(c, "Connection error. Server might be down or device does not have Internet connection.", Toast.LENGTH_SHORT).show();
-            } else if (response.equals("200")){
+            Log.d("INFO", response);
+            if (response.equals("200")){
                 Toast.makeText(c, "Login Successful!", Toast.LENGTH_SHORT).show();
                 // Moves to Main Activity
                 Intent loginIntent = new Intent (getApplicationContext(), MainActivity.class);
@@ -119,6 +118,8 @@ public class Login extends AppCompatActivity {
                 finish();
             } else if(response.equals("401")){
                 Toast.makeText(c, "Please provide the correct user details.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(c, "Connection error. Server might be down or device does not have Internet connection.", Toast.LENGTH_SHORT).show();
             }
         }
     }
