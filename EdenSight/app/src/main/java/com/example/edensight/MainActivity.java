@@ -172,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
-            String staffUrlText = "https://braserver.mooo.com/edensight/api/users/all/";
+            String urlText = "https://edensight.mooo.com/edensight/api/residents/all";
+            String staffUrlText = "https://edensight.mooo.com/edensight/api/users/all/";
             try {
                 // Retrieve current user's name based on username
                 URL staffUrl = new URL(staffUrlText);
@@ -258,13 +258,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected List<String> doInBackground(Void... voids) {
-            String urlText = "https://braserver.mooo.com/edensight/api/residents/all";
+            String urlText = "https://edensight.mooo.com/edensight/api/residents/all";
             List<String> vitalSignsUrls = new ArrayList<>();
             for (int i = 0; i < deviceAddressList.size(); i++){
                 if (deviceAddressList.get(i).equals("")){
                     continue;
                 } else {
-                    String urlData = "https://braserver.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/6";
+                    String urlData = "https://edensight.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/6";
                     vitalSignsUrls.add(urlData);
                 }
             }
@@ -430,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
                 if (deviceAddressList.get(i).equals("")){
                     continue;
                 } else {
-                    String urlData = "https://braserver.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/1";
+                    String urlData = "https://edensight.mooo.com/edensight/api/vitalsigns/" + deviceAddressList.get(i) + "/1";
                     vitalSignsUrls.add(urlData);
                 }
             }
